@@ -17,6 +17,7 @@ public abstract class EntityBase {
     protected float x, y;
     protected int width, height;
     protected int health;
+    protected int maxHealth;
     protected boolean active = true;
     protected Rectangle bounds;
     protected boolean beinghurt=false;

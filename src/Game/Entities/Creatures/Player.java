@@ -58,7 +58,7 @@ public class Player extends CreatureBase {
         bounds.height=14*2;
         health=75;
         attack=2;
-
+        maxHealth = health;
 
         animDown = new Animation(animWalkingSpeed,Images.player_front);
         animLeft = new Animation(animWalkingSpeed,Images.player_left);
@@ -127,6 +127,10 @@ public class Player extends CreatureBase {
 
         //spellgui
         spellGUI.tick();
+        
+        if(handler.getKeyManager().lifebut && health < maxHealth) {
+        	this.health ++;
+        }
     }
 
     @Override
