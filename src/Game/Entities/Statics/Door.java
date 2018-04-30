@@ -35,6 +35,7 @@ public class Door extends StaticEntity {
         int iry= (int)(bounds.y-handler.getGameCamera().getyOffset()+height);
         ir.y=iry;
         ir.x=irx;
+        this.active = false;
     }
 
     @Override
