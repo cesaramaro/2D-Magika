@@ -22,8 +22,8 @@ public class GameState extends State {
 
 
     @Override
-    public void tick() {
-        handler.getWorld().tick();
+    public void tick(Graphics g) {
+        handler.getWorld().tick(g);
 
     }
 

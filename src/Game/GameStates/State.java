@@ -27,7 +27,7 @@ public abstract class State {
         this.handler = handler;
     }
 
-    public abstract void tick();
+    public abstract void tick(Graphics g);
 
     public abstract void render(Graphics g);
 

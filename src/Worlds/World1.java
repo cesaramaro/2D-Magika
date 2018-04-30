@@ -3,6 +3,7 @@ package Worlds;
 import Game.Entities.Creatures.Player;
 import Game.Entities.Creatures.SkelyEnemy;
 import Game.Entities.Statics.*;
+import Game.GameStates.State;
 import Main.Handler;
 
 /**
@@ -17,7 +18,6 @@ public class World1 extends BaseWorld{
         super(handler,path,player);
         this.handler = handler;
         caveWorld = new CaveWorld(handler,"res/Maps/caveMap.map",player);
-
         entityManager.addEntity(new Tree(handler, 100, 250));
         entityManager.addEntity(new Rock(handler, 100, 450));
         entityManager.addEntity(new Tree(handler, 533, 276));
@@ -31,6 +31,6 @@ public class World1 extends BaseWorld{
 
         entityManager.getPlayer().setX(spawnX);
         entityManager.getPlayer().setY(spawnY);
+        nextWorld = caveWorld;
     }
-
 }

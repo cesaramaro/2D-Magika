@@ -43,7 +43,7 @@ public class PauseState extends State {
     }
 
     @Override
-    public void tick() {
+    public void tick(Graphics g) {
         handler.getMouseManager().setUimanager(uiManager);
         uiManager.tick();
         count++;

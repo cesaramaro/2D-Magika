@@ -6,6 +6,7 @@ import Game.GameStates.State;
 import Game.Items.ItemManager;
 import Game.Tiles.Tile;
 import Main.Handler;
+import Resources.Images;
 import Resources.Utils;
 
 import java.awt.*;
@@ -20,7 +21,7 @@ public class BaseWorld {
     protected int spawnX, spawnY;
     protected int[][] tiles;
     protected int countP = 0;
-
+    protected static BaseWorld nextWorld;
     protected EntityManager entityManager;
 
     //Item
@@ -28,9 +29,8 @@ public class BaseWorld {
 
 
 
-
     public BaseWorld(Handler handler, String path, Player player) {
-
+    	
         this.handler=handler;
         entityManager = new EntityManager(handler,player);
         itemManager=new ItemManager(handler);
@@ -39,7 +39,7 @@ public class BaseWorld {
 
     }
 
-    public void tick(){
+    public void tick(Graphics g){
         entityManager.tick();
         itemManager.tick();
         countP++;
@@ -52,6 +52,10 @@ public class BaseWorld {
             countP=0;
             State.setState(handler.getGame().pauseState);
         }
+        if(handler.getKeyManager().skipbut){
+        	g.drawImage(Images.loading,0,0,800,600,null);
+        	handler.setWorld(nextWorld);
+      }
     }
 
     public void render(Graphics g){

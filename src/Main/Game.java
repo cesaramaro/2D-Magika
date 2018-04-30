@@ -168,7 +168,7 @@ public class Game implements Runnable {
 
         //game states are the menus
         if(State.getState() != null)
-            State.getState().tick();
+            State.getState().tick(g);
     }
 
     private void render(){
