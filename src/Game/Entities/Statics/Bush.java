@@ -23,14 +23,14 @@ public class Bush extends StaticEntity {
     private Random randint;
     private int RNGR;
 
-    public Bush(Handler handler, float x, float y) {
+    public Bush(Handler handler, float x, float y, String type) {
         super(handler, x, y, Tile.TILEHEIGHT, Tile.TILEWIDTH);
         bounds.x=0;
         bounds.y=0;
         bounds.width = 64;
         bounds.height = 58;
         health=10;
-
+        this.type = type;
         try {
             audioFile = new File("res/music/Chopping.wav");
             audioStream = AudioSystem.getAudioInputStream(audioFile);

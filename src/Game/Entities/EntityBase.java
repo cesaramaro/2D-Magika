@@ -19,9 +19,11 @@ public abstract class EntityBase {
     protected int health;
     protected int maxHealth;
     protected boolean active = true;
+    protected boolean visible = true;
     protected Rectangle bounds;
     protected boolean beinghurt=false;
     protected int count = 0;
+    protected String type = "";
 
 
     public EntityBase(Handler handler, float x, float y, int height, int width){
@@ -31,7 +33,7 @@ public abstract class EntityBase {
         this.width = width;
         this.height = height;
         health = DEFAULT_HEALTH;
-
+        
         bounds = new Rectangle(0, 0, width,height);
     }
 
@@ -131,6 +133,19 @@ public abstract class EntityBase {
     public void setActive(boolean active) {
         this.active = active;
     }
+    public boolean isVisible() {
+        return visible;
+    }
 
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

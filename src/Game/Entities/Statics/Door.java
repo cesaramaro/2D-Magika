@@ -20,7 +20,7 @@ public class Door extends StaticEntity {
 
     private BaseWorld world;
 
-    public Door(Handler handler, float x, float y,BaseWorld world) {
+    public Door(Handler handler, float x, float y,BaseWorld world,String type) {
         super(handler, x, y, 64, 100);
         this.world=world;
         health=10000000;
@@ -28,14 +28,15 @@ public class Door extends StaticEntity {
         bounds.y=0;
         bounds.width = 100;
         bounds.height = 64;
-
+        this.type = type;
+        
         ir.width = bounds.width;
         ir.height = bounds.height;
         int irx=(int)(bounds.x-handler.getGameCamera().getxOffset()+x);
         int iry= (int)(bounds.y-handler.getGameCamera().getyOffset()+height);
         ir.y=iry;
         ir.x=irx;
-        this.active = false;
+        visible = false;
     }
 
     @Override
@@ -56,10 +57,12 @@ public class Door extends StaticEntity {
 
     @Override
     public void render(Graphics g) {
+    	if(visible) {
         g.drawImage(Images.door,(int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()),width,height,null);
 
         g.setColor(Color.black);
         checkForPlayer(g, handler.getWorld().getEntityManager().getPlayer());
+    	}
     }
 
     private void checkForPlayer(Graphics g, Player p) {
@@ -73,8 +76,6 @@ public class Door extends StaticEntity {
             handler.setWorld(world);
 
         }
-
-
     }
 
     @Override

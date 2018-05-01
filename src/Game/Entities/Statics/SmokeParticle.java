@@ -12,8 +12,9 @@ public class SmokeParticle extends StaticEntity {
 
 
 
-    public SmokeParticle(Handler handler, float x, float y) {
+    public SmokeParticle(Handler handler, float x, float y, String type) {
         super(handler, x, y, 22, 22);
+        this.type = type;
         health=100;
         }
 

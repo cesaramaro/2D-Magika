@@ -20,13 +20,14 @@ public class Tree extends StaticEntity {
     private DataLine.Info info;
     private Clip audioClip;
 
-    public Tree(Handler handler, float x, float y) {
+    public Tree(Handler handler, float x, float y, String type) {
         super(handler, x, y, Tile.TILEHEIGHT * 2, Tile.TILEWIDTH);
         bounds.x=14;
         bounds.y=85;
         bounds.width = 36;
         bounds.height = 48;
         health=16;
+        this.type = type;
 
         try {
             audioFile = new File("res/music/Chopping.wav");

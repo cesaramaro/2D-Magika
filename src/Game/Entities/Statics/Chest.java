@@ -1,5 +1,6 @@
 package Game.Entities.Statics;
 
+import Game.Entities.Creatures.Player;
 import Game.Items.Item;
 import Game.Tiles.Tile;
 import Resources.Images;
@@ -7,6 +8,7 @@ import Main.Handler;
 
 import javax.sound.sampled.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
@@ -14,7 +16,7 @@ import java.util.Random;
 /**
  * Created by Elemental on 1/2/2017.
  */
-public class Rock extends StaticEntity {
+public class Chest extends StaticEntity {
 
     private File audioFile;
     private AudioInputStream audioStream;
@@ -23,15 +25,17 @@ public class Rock extends StaticEntity {
     private Clip audioClip;
     private Random randint;
     private int RNGR;
+    private boolean opened = false;
+    private Rectangle ir = new Rectangle();
 
-    public Rock(Handler handler, float x, float y, String type) {
+    public Chest(Handler handler, float x, float y, String type) {
         super(handler, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
 
         bounds.x=0;
         bounds.y=0;
         bounds.width = 64;
         bounds.height = 64;
-        health=16;
+        health=1000000;
         this.type = type;
         
         try {
@@ -56,35 +60,46 @@ public class Rock extends StaticEntity {
 
     @Override
     public void tick() {
-        if(isBeinghurt()){
-            audioClip.start();
+        if(isBeinghurt()) { 
+        	if(opened) {
+        		try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        		opened =!opened;
+        	}else if (!opened) {
+        		opened =!opened;
+        		try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        	}
+        	this.beinghurt = false;
+        	health = 1000000;
         }
-        if(!isBeinghurt() && !handler.getKeyManager().attbut){
-            audioClip.stop();
-        }
-        if(!isActive()){
-            audioClip.stop();
-
-        }
-
     }
+    
 
     @Override
     public void render(Graphics g) {
-        renderLife(g);
-        g.drawImage(Images.blocks[14],(int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()),width,height,null);
-
+        if(!opened) {
+        g.drawImage(Images.chest[0],(int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()),width,height,null);
+        }
+        else {
+        	g.drawImage(Images.chest[1],(int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()),width,height,null);
+        }
     }
 
     @Override
     public void die() {
-        randint=new Random();
-        RNGR=randint.nextInt(1) + 1;
-        System.out.println(RNGR);
-        handler.getWorld().getItemManager().addItem(Item.rockItem.createNew((int)x + bounds.x,(int)y + bounds.y,1));
-        if(RNGR==1){
-            handler.getWorld().getItemManager().addItem(Item.fireRuneItem.createNew((int)x + bounds.x + (randint.nextInt(32) -32),(int)y + bounds.y+(randint.nextInt(32) -32),(randint.nextInt(3) +1)));
+    	for(int i = 0; i < handler.getWorld().getEntityManager().getEntities().size();i++) {
+        if(handler.getWorld().getEntityManager().getEntities().get(i).getType().equals("Door")) {
+        	handler.getWorld().getEntityManager().getEntities().get(i).setVisible(true);
         }
-
+    	}
     }
 }
