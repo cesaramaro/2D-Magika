@@ -59,7 +59,7 @@ public class Images {
 
 
 
-        blocks = new BufferedImage[15];
+        blocks = new BufferedImage[16];
 
         player_left = new BufferedImage[4];
         player_right = new BufferedImage[4];
@@ -162,7 +162,9 @@ public class Images {
             particleSmoke[2]= newsheet.crop(154,400,20,35);
 
             items[0]= newsheet.crop(114,448,30,24);//log
-
+            items[1]= newsheet.crop(114,489,30,25);//stick
+            items[2]= newsheet.crop(151,487,30,25);//bone
+            
             numbers[1]= numsheet.crop(17,15,17,22);
             numbers[2]= numsheet.crop(64,16,14,19);
             numbers[3]= numsheet.crop(110,16,14,19);
@@ -200,6 +202,7 @@ public class Images {
             blocks[12] = newsheet.crop(0,260,Bwidth,Bheight);//mossyrock
             blocks[13] = newsheet.crop(176,0,Bwidth,Bheight*2);//tree
             blocks[14] = newsheet.crop(174,410,78,74);//rock
+            blocks[15] = newsheet.crop(252,410,78,74);//bush
 
 
             //player anim

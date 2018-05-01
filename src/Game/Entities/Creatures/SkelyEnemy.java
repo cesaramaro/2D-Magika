@@ -2,6 +2,7 @@ package Game.Entities.Creatures;
 
 import Game.Entities.EntityBase;
 import Game.Inventories.Inventory;
+import Game.Items.Item;
 import Main.Handler;
 import Resources.Animation;
 import Resources.Images;
@@ -26,6 +27,7 @@ public class SkelyEnemy extends CreatureBase  {
     private int healthcounter =0;
 
     private Random randint;
+    private int RNGR;
     private int moveCount=0;
     private int direction;
 
@@ -189,6 +191,8 @@ public class SkelyEnemy extends CreatureBase  {
 
     @Override
     public void die() {
-
+    	randint=new Random();
+        RNGR=randint.nextInt(3) + 1;
+    	handler.getWorld().getItemManager().addItem(Item.boneItem.createNew((int)x + bounds.x,(int)y + bounds.y,RNGR));
     }
 }
