@@ -14,7 +14,9 @@ public class Images {
     private static final int Bwidth = 64, Bheight = 64;
     private static final int Rwidth = 56, Rheight = 93;
     private static final int Fwidth = 512, Fheight = 197;
-
+    private static final int ZOMBIE_WIDTH = 32, ZOMBIE_HEIGHT = 32;
+    private static final int ZOMBIE_X = 96;
+    
     public static BufferedImage[] blocks;
     public static BufferedImage[] player_right;
     public static BufferedImage[] player_left;
@@ -24,6 +26,10 @@ public class Images {
     public static BufferedImage[] SkelyEnemy_left;
     public static BufferedImage[] SkelyEnemy_front;
     public static BufferedImage[] SkelyEnemy_back;
+    public static BufferedImage[] zombieEnemy_right;
+    public static BufferedImage[] zombieEnemy_left;
+    public static BufferedImage[] zombieEnemy_front;
+    public static BufferedImage[] zombieEnemy_back;
     public static BufferedImage[] butstart;
     public static BufferedImage[] particleSmoke;
     public static BufferedImage[] items;
@@ -56,8 +62,7 @@ public class Images {
         SpriteSheet FireBallRightsheet = new SpriteSheet(Images.loadImage("/Sheets/FireBallRight.png"));
         SpriteSheet FireBallUpsheet = new SpriteSheet(Images.loadImage("/Sheets/FireBallUp.png"));
         SpriteSheet FireBallDownsheet = new SpriteSheet(Images.loadImage("/Sheets/FireBallDown.png"));
-
-
+        SpriteSheet zombieSheet = new SpriteSheet(Images.loadImage("/Sheets/enemies.png"));
 
         blocks = new BufferedImage[15];
 
@@ -70,6 +75,11 @@ public class Images {
         SkelyEnemy_right = new BufferedImage[4];
         SkelyEnemy_front = new BufferedImage[4];
         SkelyEnemy_back = new BufferedImage[4];
+        
+        zombieEnemy_left = new BufferedImage[3];
+        zombieEnemy_right = new BufferedImage[3];
+        zombieEnemy_front = new BufferedImage[3];
+        zombieEnemy_back = new BufferedImage[3];
 
         butstart = new BufferedImage[3];
         particleSmoke = new BufferedImage[3];
@@ -85,11 +95,8 @@ public class Images {
         FireBallUp = new BufferedImage[6];
         FireBallDown = new BufferedImage[6];
 
-
-
-
         try {
-
+            
             loading = ImageIO.read(getClass().getResourceAsStream("/Sheets/loading.png"));
             spellGUI = ImageIO.read(getClass().getResourceAsStream("/Sheets/SpellGUI.png"));
 
@@ -141,7 +148,8 @@ public class Images {
             FireBallDown[4]= FireBallDownsheet.crop(Fheight*0,Fwidth*1,Fheight,Fwidth);
             FireBallDown[5]= FireBallDownsheet.crop(Fheight*0,Fwidth*2,Fheight,Fwidth);
 
-            Runes[0]= runesheet.crop(Rwidth*0,Rheight*0,Rwidth,Rheight);//Runes
+            // Runes
+            Runes[0]= runesheet.crop(Rwidth*0,Rheight*0,Rwidth,Rheight);
             Runes[1]= runesheet.crop(Rwidth*1,Rheight*0,Rwidth,Rheight);
             Runes[2]= runesheet.crop(Rwidth*2,Rheight*0,Rwidth,Rheight);
             Runes[3]= runesheet.crop(Rwidth*3,Rheight*0,Rwidth,Rheight);
@@ -243,11 +251,27 @@ public class Images {
             SkelyEnemy_back[1]=newsheet.crop(164,227+130,width,height);
             SkelyEnemy_back[2]=newsheet.crop(196,227+130,width,height);
             SkelyEnemy_back[3]=newsheet.crop(228,227+130,28,height);
+            
+            // Zombie enemy animation
+            zombieEnemy_front[0] = zombieSheet.crop(ZOMBIE_X, 0, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_front[1] = zombieSheet.crop((ZOMBIE_X + ZOMBIE_WIDTH), 0, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_front[2] = zombieSheet.crop((ZOMBIE_X + ZOMBIE_WIDTH * 2), 0, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+
+            zombieEnemy_left[0] = zombieSheet.crop(ZOMBIE_X, 32, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_left[1] = zombieSheet.crop((ZOMBIE_X + ZOMBIE_WIDTH), 32, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_left[2] = zombieSheet.crop((ZOMBIE_X + ZOMBIE_WIDTH * 2), 32, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+
+            zombieEnemy_right[0] = zombieSheet.crop(ZOMBIE_X, 64, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_right[1] = zombieSheet.crop((ZOMBIE_X + ZOMBIE_WIDTH), 64, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_right[2] = zombieSheet.crop((ZOMBIE_X + ZOMBIE_WIDTH * 2), 64, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+
+            zombieEnemy_back[0] = zombieSheet.crop(ZOMBIE_X, 96, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_back[1] = zombieSheet.crop((ZOMBIE_X + ZOMBIE_WIDTH), 96, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_back[2] = zombieSheet.crop((ZOMBIE_X + ZOMBIE_WIDTH * 2), 96, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public static BufferedImage loadImage(String path) {
