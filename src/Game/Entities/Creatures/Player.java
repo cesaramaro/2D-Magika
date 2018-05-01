@@ -208,16 +208,16 @@ public class Player extends CreatureBase {
         ar.width = arSize;
         ar.height = arSize;
 
-        if(lu && handler.getKeyManager().attbut){
+        if(lookingUp && handler.getKeyManager().attbut){
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y - arSize;
-        }else if(ld && handler.getKeyManager().attbut){
+        }else if(lookingDown && handler.getKeyManager().attbut){
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y + cb.height;
-        }else if(ll && handler.getKeyManager().attbut){
+        }else if(lookingLeft && handler.getKeyManager().attbut){
             ar.x = cb.x - arSize;
             ar.y = cb.y + cb.height / 2 - arSize / 2;
-        }else if(lr && handler.getKeyManager().attbut){
+        }else if(lookingRight && handler.getKeyManager().attbut){
             ar.x = cb.x + cb.width;
             ar.y = cb.y + cb.height / 2 - arSize / 2;
         }else{
@@ -262,28 +262,28 @@ public class Player extends CreatureBase {
     private void FireBallAttack(Graphics g) {
 
 
-        if (lr&&LaunchedFireBall&&!LaunchedFireBallL&&!LaunchedFireBallR&&!LaunchedFireBallD&&!LaunchedFireBallU) {
+        if (lookingRight&&LaunchedFireBall&&!LaunchedFireBallL&&!LaunchedFireBallR&&!LaunchedFireBallD&&!LaunchedFireBallU) {
             LaunchedFireBall=false;
             LaunchedFireBallL=false;
             LaunchedFireBallR=true;
             LaunchedFireBallU=false;
             LaunchedFireBallD=false;
 
-        } else if (ld&&LaunchedFireBall&&!LaunchedFireBallL&&!LaunchedFireBallR&&!LaunchedFireBallD&&!LaunchedFireBallU) {
+        } else if (lookingDown&&LaunchedFireBall&&!LaunchedFireBallL&&!LaunchedFireBallR&&!LaunchedFireBallD&&!LaunchedFireBallU) {
             LaunchedFireBall=false;
             LaunchedFireBallL=false;
             LaunchedFireBallR=false;
             LaunchedFireBallU=false;
             LaunchedFireBallD=true;
 
-        } else if (lu&&LaunchedFireBall&&!LaunchedFireBallL&&!LaunchedFireBallR&&!LaunchedFireBallD&&!LaunchedFireBallU) {
+        } else if (lookingUp&&LaunchedFireBall&&!LaunchedFireBallL&&!LaunchedFireBallR&&!LaunchedFireBallD&&!LaunchedFireBallU) {
             LaunchedFireBall=false;
             LaunchedFireBallL=false;
             LaunchedFireBallR=false;
             LaunchedFireBallU=true;
             LaunchedFireBallD=false;
 
-        } else if(ll&&LaunchedFireBall&&!LaunchedFireBallL&&!LaunchedFireBallR&&!LaunchedFireBallD&&!LaunchedFireBallU) {
+        } else if(lookingLeft&&LaunchedFireBall&&!LaunchedFireBallL&&!LaunchedFireBallR&&!LaunchedFireBallD&&!LaunchedFireBallU) {
             LaunchedFireBall=false;
             LaunchedFireBallL=true;
             LaunchedFireBallR=false;
