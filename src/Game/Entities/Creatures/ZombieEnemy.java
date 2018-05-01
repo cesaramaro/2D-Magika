@@ -11,11 +11,7 @@ import java.util.Random;
 
 public class ZombieEnemy extends CreatureBase  {
 
-
     private Animation animDown, animUp, animLeft, animRight;
-
-    //private Boolean attacking=false;
-    private boolean attacking = false;
 
     private int animWalkingSpeed = 150;
     private Inventory zombieInventory;
@@ -56,9 +52,9 @@ public class ZombieEnemy extends CreatureBase  {
         animRight.tick();
         animLeft.tick();
 
-        moveCount ++;
+        moveCount++;
         if (moveCount >= 60) {
-            moveCount=0;
+            moveCount = 0;
             direction = randint.nextInt(4) + 1;
         }
         checkIfMove();
@@ -71,8 +67,9 @@ public class ZombieEnemy extends CreatureBase  {
                 System.out.print(isBeinghurt());
             }
         }
-        if(healthcounter >= 120 && !isBeinghurt()) {
-            healthcounter=0;
+        
+        if (healthcounter >= 120 && !isBeinghurt()) {
+            healthcounter = 0;
         }
         zombieInventory.tick();
     }
@@ -85,14 +82,16 @@ public class ZombieEnemy extends CreatureBase  {
         zombieCam.y = (int) (y - handler.getGameCamera().getyOffset() - (64 * 3));
         zombieCam.width = 64 * 7;
         zombieCam.height = 64 * 7;
-
-        if (zombieCam.contains(handler.getWorld().getEntityManager().getPlayer().getX() 
-                - handler.getGameCamera().getxOffset(), handler.getWorld().getEntityManager().getPlayer().getY() 
-                - handler.getGameCamera().getyOffset())
-                || zombieCam.contains(handler.getWorld().getEntityManager().getPlayer().getX() 
-                        - handler.getGameCamera().getxOffset() + handler.getWorld().getEntityManager().getPlayer().getWidth(), 
-                        handler.getWorld().getEntityManager().getPlayer().getY() - handler.getGameCamera().getyOffset() 
-                        + handler.getWorld().getEntityManager().getPlayer().getHeight())) {
+        
+        double playerWidth = handler.getWorld().getEntityManager().getPlayer().getWidth();
+        double playerHeight = handler.getWorld().getEntityManager().getPlayer().getHeight();
+        double playerX = handler.getWorld().getEntityManager().getPlayer().getX();
+        double playerY = handler.getWorld().getEntityManager().getPlayer().getY();
+        double cameraX = handler.getGameCamera().getxOffset();
+        double cameraY = handler.getGameCamera().getyOffset();
+        
+        if (zombieCam.contains(playerX - cameraX, playerY - cameraY) 
+                || zombieCam.contains(playerX - cameraX + playerWidth, playerY - cameraY + playerHeight)) {
 
             Rectangle cb = getCollisionBounds(0, 0);
             Rectangle ar = new Rectangle();
@@ -100,51 +99,39 @@ public class ZombieEnemy extends CreatureBase  {
             ar.width = arSize;
             ar.height = arSize;
 
-            if (lu) {
+            if (lookingUp) {
                 ar.x = cb.x + cb.width / 2 - arSize / 2;
                 ar.y = cb.y - arSize;
-            } else if (ld) {
+            } else if (lookingDown) {
                 ar.x = cb.x + cb.width / 2 - arSize / 2;
                 ar.y = cb.y + cb.height;
-            } else if (ll) {
+            } else if (lookingLeft) {
                 ar.x = cb.x - arSize;
                 ar.y = cb.y + cb.height / 2 - arSize / 2;
-            } else if (lr) {
+            } else if (lookingRight) {
                 ar.x = cb.x + cb.width;
                 ar.y = cb.y + cb.height / 2 - arSize / 2;
             }
 
-            for (EntityBase e : handler.getWorld().getEntityManager().getEntities()) {
-                if (e.equals(this))
-                    continue;
-                if (e.getCollisionBounds(0, 0).intersects(ar) && e.equals(handler.getWorld().getEntityManager().getPlayer())) {
+            for (EntityBase entity : handler.getWorld().getEntityManager().getEntities()) {
+                if (entity.equals(this)) continue;
+                if (entity.getCollisionBounds(0, 0).intersects(ar) && entity.equals(handler.getWorld().getEntityManager().getPlayer())) {
                     checkAttacks();
                     return;
                 }
             }
-
-
-            if (x >= handler.getWorld().getEntityManager().getPlayer().getX() - 8 && x <= handler.getWorld().getEntityManager().getPlayer().getX() + 8) {//nada
-
-                xMove = 0;
-            } else if (x < handler.getWorld().getEntityManager().getPlayer().getX()) {//move right
-
-                xMove = speed;
-
-            } else if (x > handler.getWorld().getEntityManager().getPlayer().getX()) {//move left
-
-                xMove = -speed;
-            }
-
-            if (y >= handler.getWorld().getEntityManager().getPlayer().getY() - 8 && y <= handler.getWorld().getEntityManager().getPlayer().getY() + 8) {//nada
-                yMove = 0;
-            } else if (y < handler.getWorld().getEntityManager().getPlayer().getY()) {//move down
-                yMove = speed;
-
-            } else if (y > handler.getWorld().getEntityManager().getPlayer().getY()) {//move up
-                yMove = -speed;
-            }
+            
+            // Don't move if the zombie is already near the player (i.e attacking them)
+            // Otherwise, move either to the left or the right
+            if ((x >= playerX - 8) && (x <= playerX + 8)) xMove = 0; // Don't move
+            else xMove = (x < playerX ? speed : -speed);
+            
+            if ((y >= playerY - 8) && (y <= playerY + 8)) yMove = 0; // Don't move
+            else yMove = (y < playerY ? speed : -speed);
+            
         } else {
+            // Move the zombie in random directions 
+            // when the player is out of its view
             switch (direction) {
             case 1://up
                 yMove = -speed;
@@ -169,10 +156,19 @@ public class ZombieEnemy extends CreatureBase  {
      */
     @Override
     public void render(Graphics g) {
-        g.drawImage(getCurrentAnimationFrame(animDown,animUp,animLeft,animRight,Images.zombieEnemy_front,Images.zombieEnemy_back,Images.zombieEnemy_left,Images.zombieEnemy_right), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-        if(isBeinghurt() && healthcounter<=120){
-            g.setColor(Color.white);
-            g.drawString("Zombie Health: " + getHealth(),(int) (x-handler.getGameCamera().getxOffset()),(int) (y-handler.getGameCamera().getyOffset()-20));
+        g.drawImage(
+                getCurrentAnimationFrame(animDown, animUp, animLeft, animRight, 
+                        Images.zombieEnemy_front, Images.zombieEnemy_back,  
+                        Images.zombieEnemy_left, Images.zombieEnemy_right), 
+                (int) (x - handler.getGameCamera().getxOffset()), 
+                (int) (y - handler.getGameCamera().getyOffset()), 
+                width, height, null);
+
+        if (isBeinghurt() && healthcounter <= 120) {
+            g.setColor(Color.WHITE);
+            g.drawString("Zombie Health: " + getHealth(),
+                    (int) (x-handler.getGameCamera().getxOffset()),
+                    (int) (y-handler.getGameCamera().getyOffset()-20));
         }
     }
 

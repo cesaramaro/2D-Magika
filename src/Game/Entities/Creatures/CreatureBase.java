@@ -18,59 +18,57 @@ import java.util.DuplicateFormatFlagsException;
 public abstract class CreatureBase extends EntityBase {
 
     protected static final float DEFAULT_SPEED = 3.0f;
-    protected static final int DEFAULT_CREATURE_WIDTH = 64,
-            DEFAULT_CREATURE_HEIGHT = 64;
+    protected static final int DEFAULT_CREATURE_WIDTH = 64, DEFAULT_CREATURE_HEIGHT = 64;
 
-    protected int attack=6;
+    protected int attack = 6;
 
     protected float speed;
     protected float xMove, yMove;
 
     protected long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
 
-    protected boolean ld=true,ll=false,lr=false,lu=false;
-
+    protected boolean lookingDown = true, lookingLeft = false, lookingRight = false, lookingUp = false;
 
     public CreatureBase(Handler handler, float x, float y, int height, int width) {
         super(handler,x, y,height,width);
         speed = DEFAULT_SPEED;
-        xMove=0;
-        yMove=0;
+        xMove = 0;
+        yMove = 0;
     }
 
     public BufferedImage getCurrentAnimationFrame( Animation animDown, Animation animUp, Animation animLeft, Animation animRight, BufferedImage[] front,BufferedImage[] back,BufferedImage[] left,BufferedImage[] right) {
         if(xMove < 0){
-            ll=true;
-            ld=false;
-            lr=false;
-            lu=false;
+            lookingLeft=true;
+            lookingDown=false;
+            lookingRight=false;
+            lookingUp=false;
             return animLeft.getCurrentFrame();
         }else if(xMove > 0){
-            ll=false;
-            ld=false;
-            lr=true;
-            lu=false;
+            lookingLeft=false;
+            lookingDown=false;
+            lookingRight=true;
+            lookingUp=false;
             return animRight.getCurrentFrame();
         }else if(yMove < 0){
-            ll=false;
-            ld=false;
-            lr=false;
-            lu=true;
+            lookingLeft=false;
+            lookingDown=false;
+            lookingRight=false;
+            lookingUp=true;
             return animUp.getCurrentFrame();
         }else if(yMove > 0){
-            ll=false;
-            ld=true;
-            lr=false;
-            lu=false;
+            lookingLeft=false;
+            lookingDown=true;
+            lookingRight=false;
+            lookingUp=false;
             return animDown.getCurrentFrame();
         }else{
-            if(ld){
+            if(lookingDown){
                 return front[0];
-            }else if(lu){
+            }else if(lookingUp){
                 return back[0];
-            }else if(ll){
+            }else if(lookingLeft){
                 return left[0];
-            }else if(lr){
+            }else if(lookingRight){
                 return right[0];
             }else{
                 return front[0];
@@ -146,16 +144,16 @@ public abstract class CreatureBase extends EntityBase {
         ar.width = arSize;
         ar.height = arSize;
 
-        if(lu){
+        if(lookingUp){
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y - arSize;
-        }else if(ld){
+        }else if(lookingDown){
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y + cb.height;
-        }else if(ll){
+        }else if(lookingLeft){
             ar.x = cb.x - arSize;
             ar.y = cb.y + cb.height / 2 - arSize / 2;
-        }else if(lr){
+        }else if(lookingRight){
             ar.x = cb.x + cb.width;
             ar.y = cb.y + cb.height / 2 - arSize / 2;
         }else{
