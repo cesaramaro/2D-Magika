@@ -108,16 +108,16 @@ public class SkelyEnemy extends CreatureBase  {
             ar.width = arSize;
             ar.height = arSize;
 
-            if (lu) {
+            if (lookingUp) {
                 ar.x = cb.x + cb.width / 2 - arSize / 2;
                 ar.y = cb.y - arSize;
-            } else if (ld) {
+            } else if (lookingDown) {
                 ar.x = cb.x + cb.width / 2 - arSize / 2;
                 ar.y = cb.y + cb.height;
-            } else if (ll) {
+            } else if (lookingLeft) {
                 ar.x = cb.x - arSize;
                 ar.y = cb.y + cb.height / 2 - arSize / 2;
-            } else if (lr) {
+            } else if (lookingRight) {
                 ar.x = cb.x + cb.width;
                 ar.y = cb.y + cb.height / 2 - arSize / 2;
             }
