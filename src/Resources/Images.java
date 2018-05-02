@@ -52,6 +52,7 @@ public class Images {
     public static BufferedImage loading;
     public static BufferedImage spellGUI;
     public static BufferedImage[] chest;
+    public static BufferedImage[] quest;
 
     public Images() {
 
@@ -63,6 +64,7 @@ public class Images {
         SpriteSheet FireBallUpsheet = new SpriteSheet(Images.loadImage("/Sheets/FireBallUp.png"));
         SpriteSheet FireBallDownsheet = new SpriteSheet(Images.loadImage("/Sheets/FireBallDown.png"));
         SpriteSheet Chestsheet = new SpriteSheet(Images.loadImage("/Sheets/chest2.png"));
+        SpriteSheet Questsheet = new SpriteSheet(Images.loadImage("/Sheets/quest.png"));
         SpriteSheet zombieSheet = new SpriteSheet(Images.loadImage("/Sheets/enemies.png"));
 
 
@@ -98,6 +100,7 @@ public class Images {
         FireBallDown = new BufferedImage[6];
 
         chest = new BufferedImage[2];
+        quest = new BufferedImage[2];
 
 
         try {
@@ -219,6 +222,10 @@ public class Images {
             //Chest
             chest[0] = Chestsheet.crop(1, 0, 30, 32);//closed
             chest[1] = Chestsheet.crop(33, 0, 30, 32);//opened
+            
+          //Quest
+            quest[0] = Questsheet.crop(63, 54, 293, 166);//chest
+            quest[1] = Questsheet.crop(390, 54, 298, 473);//quest info
 
 
             //player anim

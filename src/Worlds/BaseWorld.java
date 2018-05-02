@@ -6,6 +6,7 @@ import Game.GameStates.State;
 import Game.Items.ItemManager;
 import Game.Tiles.Tile;
 import Main.Handler;
+import Quests.Quest1;
 import Resources.Images;
 import Resources.Utils;
 
@@ -23,6 +24,7 @@ public class BaseWorld {
     protected int countP = 0;
     protected static BaseWorld nextWorld;
     protected EntityManager entityManager;
+    protected Quest1 quest1;
 
     //Item
     protected ItemManager itemManager;
@@ -75,9 +77,13 @@ public class BaseWorld {
         itemManager.render(g);
         //Entities
         entityManager.render(g);
+        
+        
 
         entityManager.getPlayer().getInventory().render(g);
         entityManager.getPlayer().getSpellGUI().render(g);
+        entityManager.getPlayer().getQuest1().render(g);
+        entityManager.getPlayer().getQuestItems().render(g);
 
     }
 

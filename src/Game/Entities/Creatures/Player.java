@@ -3,11 +3,14 @@ package Game.Entities.Creatures;
 import Game.Entities.EntityBase;
 import Game.GameStates.State;
 import Game.Inventories.Inventory;
+import Game.Inventories.QuestItems;
 import Game.Items.Item;
 import Game.SpellCast.SpellCastUI;
 import Resources.Animation;
 import Resources.Images;
 import Main.Handler;
+import Quests.Quest1;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -26,7 +29,8 @@ public class Player extends CreatureBase {
 
     //Inventory
     private Inventory inventory;
-
+    private Quest1 quest1;
+    private QuestItems questItems;
     private SpellCastUI spellGUI;
 
     private int fcounter = 0;
@@ -71,6 +75,8 @@ public class Player extends CreatureBase {
 
         inventory= new Inventory(handler);
         spellGUI= new SpellCastUI(handler);
+        quest1 = new Quest1(handler);
+        questItems = new QuestItems(handler);
     }
 
     @Override
@@ -124,7 +130,8 @@ public class Player extends CreatureBase {
 
         //Inventory
         inventory.tick();
-
+        quest1.tick();
+        questItems.tick();
         //spellgui
         spellGUI.tick();
         
@@ -345,7 +352,7 @@ public class Player extends CreatureBase {
 
             return animFireATTU.getCurrentFrame();
 
-        }else{   //ll
+        }else{  
 
             return animFireATT.getCurrentFrame();
         }
@@ -356,7 +363,12 @@ public class Player extends CreatureBase {
     public Inventory getInventory() {
         return inventory;
     }
-
+    public Quest1 getQuest1() {
+        return quest1;
+    }
+    public QuestItems getQuestItems() {
+        return questItems;
+    }
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }

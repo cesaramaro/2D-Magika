@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -30,7 +31,6 @@ public class Chest extends StaticEntity {
 
     public Chest(Handler handler, float x, float y, String type) {
         super(handler, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
-
         bounds.x=0;
         bounds.y=0;
         bounds.width = 64;
@@ -61,13 +61,16 @@ public class Chest extends StaticEntity {
     @Override
     public void tick() {
         if(isBeinghurt()) { 
+        	deliverItems();
         	if(opened) {
+        		
         		try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+        		
         		opened =!opened;
         	}else if (!opened) {
         		opened =!opened;
@@ -80,7 +83,27 @@ public class Chest extends StaticEntity {
         	}
         	this.beinghurt = false;
         	health = 1000000;
+        	
+    	}
+        if(handler.getWorld().getEntityManager().getPlayer().getQuestItems().getQuestItems().isEmpty()) {
+        	active = false;
+    		die();
         }
+    }
+    
+    public void deliverItems() {
+    	for(int i = 0 ; i< handler.getWorld().getEntityManager().getPlayer().getQuestItems().getQuestItems().size();i++) {
+    		for(int j = 0 ; j<handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryItems().size();j++) {
+    			if(handler.getWorld().getEntityManager().getPlayer().getQuestItems().getQuestItems().get(i).getName().equals(handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryItems().get(j).getName())) {
+    				while(handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryItems().get(j).getCount()>0&& handler.getWorld().getEntityManager().getPlayer().getQuestItems().getQuestItems().get(i).getCount()>0) {
+    					handler.getWorld().getEntityManager().getPlayer().getQuestItems().getQuestItems().get(i).setCount(handler.getWorld().getEntityManager().getPlayer().getQuestItems().getQuestItems().get(i).getCount()-1);
+    					handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryItems().get(j).setCount(handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryItems().get(j).getCount()-1);
+    				}
+    				
+    			}
+    		}
+    	}
+    	
     }
     
 
