@@ -41,11 +41,13 @@ public class World1 extends BaseWorld{
         entityManager.addEntity(new ZombieEnemy(handler, spawnX + 300, spawnY + 300));
         entityManager.addEntity(new Bush(handler,445,185,"Bush"));
         entityManager.addEntity(new Chest(handler,250,0,"Chest"));
+        entityManager.addEntity(new Bush(handler,700,185,"Bush"));
+        entityManager.addEntity(new Bush(handler,575,895,"Bush"));
         entityManager.getPlayer().setX(spawnX);
         entityManager.getPlayer().setY(spawnY);
         stickItem.setCount(3);
         QuestItems.addItem(stickItem);
-        boneItem.setCount(4);
+        boneItem.setCount(3);
         QuestItems.addItem(boneItem);
         
         nextWorld = caveWorld;

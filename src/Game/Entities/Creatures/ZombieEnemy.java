@@ -164,12 +164,23 @@ public class ZombieEnemy extends CreatureBase  {
                 (int) (y - handler.getGameCamera().getyOffset()), 
                 width, height, null);
 
-        if (isBeinghurt() && healthcounter <= 120) {
-            g.setColor(Color.WHITE);
-            g.drawString("Zombie Health: " + getHealth(),
-                    (int) (x-handler.getGameCamera().getxOffset()),
-                    (int) (y-handler.getGameCamera().getyOffset()-20));
+        g.setColor(Color.BLACK);
+        g.drawRect((int)(x-handler.getGameCamera().getxOffset()-1),(int)(y-handler.getGameCamera().getyOffset()-21),76,11);
+        if(this.getHealth()>35){
+            g.setColor(Color.GREEN);
+            g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int)(getHealth()*1.5),10);
+
+        }else if(this.getHealth()>=15 && getHealth()<=35){
+            g.setColor(Color.YELLOW);
+            g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int)(getHealth()*1.5),10);
+
+        }else if(this.getHealth() < 15){
+            g.setColor(Color.RED);
+            g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int) (getHealth()*1.5),10);
+
         }
+        g.setColor(Color.white);
+        g.drawString("Health: " + getHealth(),(int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-10));
     }
 
     /*

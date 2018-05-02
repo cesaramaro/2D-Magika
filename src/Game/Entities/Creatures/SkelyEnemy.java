@@ -180,10 +180,24 @@ public class SkelyEnemy extends CreatureBase  {
     @Override
     public void render(Graphics g) {
         g.drawImage(getCurrentAnimationFrame(animDown,animUp,animLeft,animRight,Images.SkelyEnemy_front,Images.SkelyEnemy_back,Images.SkelyEnemy_left,Images.SkelyEnemy_right), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
-        if(isBeinghurt() && healthcounter<=120){
+            g.setColor(Color.BLACK);
+            g.drawRect((int)(x-handler.getGameCamera().getxOffset()-1),(int)(y-handler.getGameCamera().getyOffset()-21),76,11);
+            if(this.getHealth()>35){
+                g.setColor(Color.GREEN);
+                g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int)(getHealth()*1.5),10);
+
+            }else if(this.getHealth()>=15 && getHealth()<=35){
+                g.setColor(Color.YELLOW);
+                g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int)(getHealth()*1.5),10);
+
+            }else if(this.getHealth() < 15){
+                g.setColor(Color.RED);
+                g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int) (getHealth()*1.5),10);
+
+            }
             g.setColor(Color.white);
-            g.drawString("SkelyHealth: " + getHealth(),(int) (x-handler.getGameCamera().getxOffset()),(int) (y-handler.getGameCamera().getyOffset()-20));
-        }
+            g.drawString("Health: " + getHealth(),(int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-10));
+        
     }
 
 
@@ -191,8 +205,6 @@ public class SkelyEnemy extends CreatureBase  {
 
     @Override
     public void die() {
-    	randint=new Random();
-        RNGR=randint.nextInt(3) + 1;
-    	handler.getWorld().getItemManager().addItem(Item.boneItem.createNew((int)x + bounds.x,(int)y + bounds.y,RNGR));
+    	handler.getWorld().getItemManager().addItem(Item.boneItem.createNew((int)x + bounds.x,(int)y + bounds.y,3));
     }
 }
