@@ -3,6 +3,7 @@ package Worlds;
 import Game.Entities.Creatures.Player;
 import Game.Entities.EntityManager;
 import Game.GameStates.State;
+import Game.Items.Item;
 import Game.Items.ItemManager;
 import Game.Tiles.Tile;
 import Main.Handler;
@@ -25,6 +26,7 @@ public class BaseWorld {
     protected static BaseWorld nextWorld;
     protected EntityManager entityManager;
     protected Quest1 quest1;
+    protected boolean worldStart;
 
     //Item
     protected ItemManager itemManager;
@@ -36,7 +38,7 @@ public class BaseWorld {
         this.handler=handler;
         entityManager = new EntityManager(handler,player);
         itemManager=new ItemManager(handler);
-
+        worldStart = false;
         loadWorld(path);
 
     }
@@ -56,8 +58,16 @@ public class BaseWorld {
         }
         if(handler.getKeyManager().skipbut){
         	g.drawImage(Images.loading,0,0,800,600,null);
+        	handler.getWorld().getEntityManager().getPlayer().getQuestItems().setActive(false);
+            handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(true);
+            handler.getWorld().getEntityManager().getPlayer().getQuestItems().getQuestItems().clear();
         	handler.setWorld(nextWorld);
+        	handler.getWorld().setWorldStart(true);
       }
+        if (worldStart) {
+        	addQuestItems();
+        	worldStart = false;
+        }
     }
 
     public void render(Graphics g){
@@ -83,6 +93,7 @@ public class BaseWorld {
         entityManager.getPlayer().getInventory().render(g);
         entityManager.getPlayer().getSpellGUI().render(g);
         entityManager.getPlayer().getQuest1().render(g);
+        entityManager.getPlayer().getQuest2().render(g);
         entityManager.getPlayer().getQuestItems().render(g);
 
     }
@@ -111,10 +122,12 @@ public class BaseWorld {
                 tiles[x][y] = Utils.parseInt(tokens[(x + y * width) + 4]);
             }
         }
-
+        
 
     }
-
+    public void addQuestItems() {
+    	
+    }
     public int getWidth(){
         return width;
     }
@@ -141,6 +154,12 @@ public class BaseWorld {
 
     public void setItemManager(ItemManager itemManager) {
         this.itemManager = itemManager;
+    }
+    public void setWorldStart(boolean status) {
+    	this.worldStart = status;
+    }
+    public boolean getWorldStart() {
+    	return this.worldStart;
     }
 
 }

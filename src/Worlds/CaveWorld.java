@@ -3,7 +3,10 @@ import Game.Entities.Creatures.Player;
 import Game.Entities.Creatures.SkelyEnemy;
 import Game.Entities.Creatures.ZombieEnemy;
 import Game.Entities.Statics.Door;
+import Game.Inventories.QuestItems;
+import Game.Items.Item;
 import Main.Handler;
+import Resources.Images;
 
 /**
  * Created by Elemental on 2/10/2017.
@@ -26,5 +29,12 @@ public class CaveWorld extends BaseWorld {
         entityManager.getPlayer().setX(spawnX);
         entityManager.getPlayer().setY(spawnY);
         nextWorld = darkWorld;
+    }
+
+    @Override
+    public void addQuestItems() {
+    	for (Item item : handler.getWorld().getEntityManager().getPlayer().getQuest2().getQuest2Items()) {
+			QuestItems.addItem(item);
+		}
     }
 }

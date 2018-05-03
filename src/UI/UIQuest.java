@@ -6,12 +6,12 @@ import java.awt.image.BufferedImage;
 /**
  * Created by Elemental on 1/31/2017.
  */
-public class UIQuest1 extends UIObject {
+public class UIQuest extends UIObject {
     private BufferedImage images;
     private ClickListlener clicker;
 
 
-    public UIQuest1(float x, float y, int width, int height, BufferedImage images,ClickListlener clicker ) {
+    public UIQuest(float x, float y, int width, int height, BufferedImage images,ClickListlener clicker ) {
         super(x, y, width, height);
         this.images=images;
         this.clicker=clicker;

@@ -18,11 +18,6 @@ public class World1 extends BaseWorld{
 
     private Handler handler;
     private BaseWorld caveWorld;
-    public static Item woodItem = new Item(Images.items[1],"Wood",0);
-    public static Item stickItem = new Item(Images.items[0],"Stick",3);
-    public static Item rockItem = new Item(Images.blocks[14],"Rock",1);
-    public static Item fireRuneItem = new Item(Images.Runes[2],"Fire Rune",2);
-    public static Item boneItem = new Item(Images.items[2],"Bone",4);
 
     public World1(Handler handler, String path, Player player){
         super(handler,path,player);
@@ -44,13 +39,16 @@ public class World1 extends BaseWorld{
         entityManager.addEntity(new Bush(handler, 960, 320, "Bush"));
         entityManager.addEntity(new Bush(handler, 320, 960, "Bush"));
         entityManager.addEntity(new Chest(handler,250,0,"Chest"));
+        entityManager.addEntity(new Bush(handler,700,185,"Bush"));
+        entityManager.addEntity(new Bush(handler,575,895,"Bush"));
         entityManager.getPlayer().setX(spawnX);
         entityManager.getPlayer().setY(spawnY);
-        stickItem.setCount(3);
-        QuestItems.addItem(stickItem);
-        boneItem.setCount(4);
-        QuestItems.addItem(boneItem);
-        
         nextWorld = caveWorld;
+    }
+    @Override
+    public void addQuestItems() {
+    	for (Item item : handler.getWorld().getEntityManager().getPlayer().getQuest1().getQuest1Items()) {
+			QuestItems.addItem(item);
+		}
     }
 }
