@@ -57,17 +57,22 @@ public class BaseWorld {
             State.setState(handler.getGame().pauseState);
         }
         if(handler.getKeyManager().skipbut){
+        	if(!handler.getWorld().equals(nextWorld)) {
         	g.drawImage(Images.loading,0,0,800,600,null);
         	handler.getWorld().getEntityManager().getPlayer().getQuestItems().setActive(false);
             handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(true);
             handler.getWorld().getEntityManager().getPlayer().getQuestItems().getQuestItems().clear();
+            entityManager.getPlayer().setX(spawnX);
+            entityManager.getPlayer().setY(spawnY);
         	handler.setWorld(nextWorld);
         	handler.getWorld().setWorldStart(true);
+        	}
       }
         if (worldStart) {
         	addQuestItems();
         	worldStart = false;
         }
+        
     }
 
     public void render(Graphics g){

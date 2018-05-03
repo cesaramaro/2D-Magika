@@ -23,6 +23,7 @@ public class World1 extends BaseWorld{
         super(handler,path,player);
         this.handler = handler;
         caveWorld = new CaveWorld(handler,"res/Maps/caveMap.map",player);
+        // Entities in World
         entityManager.addEntity(new Tree(handler, 100, 250,"Tree"));
         entityManager.addEntity(new Rock(handler, 100, 450,"Rock"));
         entityManager.addEntity(new Tree(handler, 533, 276,"Tree"));
@@ -41,12 +42,13 @@ public class World1 extends BaseWorld{
         entityManager.addEntity(new Chest(handler,250,0,"Chest"));
         entityManager.addEntity(new Bush(handler,700,185,"Bush"));
         entityManager.addEntity(new Bush(handler,575,895,"Bush"));
+        //Player Spawn Point
         entityManager.getPlayer().setX(spawnX);
         entityManager.getPlayer().setY(spawnY);
-        nextWorld = caveWorld;
+        nextWorld = caveWorld; //Sets next world (makes skip possible)
     }
     @Override
-    public void addQuestItems() {
+    public void addQuestItems() { //adds quest Items (Runs only one time. Called in BaseWorld)
     	for (Item item : handler.getWorld().getEntityManager().getPlayer().getQuest1().getQuest1Items()) {
 			QuestItems.addItem(item);
 		}
