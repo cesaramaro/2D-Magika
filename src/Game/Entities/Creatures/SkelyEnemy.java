@@ -38,7 +38,7 @@ public class SkelyEnemy extends CreatureBase  {
         bounds.width=16*2;
         bounds.height=14*2;
         speed=1.5f;
-        health=50;
+        health=20;
 
         SkelyCam= new Rectangle();
 
@@ -182,17 +182,17 @@ public class SkelyEnemy extends CreatureBase  {
         g.drawImage(getCurrentAnimationFrame(animDown,animUp,animLeft,animRight,Images.SkelyEnemy_front,Images.SkelyEnemy_back,Images.SkelyEnemy_left,Images.SkelyEnemy_right), (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
             g.setColor(Color.BLACK);
             g.drawRect((int)(x-handler.getGameCamera().getxOffset()-1),(int)(y-handler.getGameCamera().getyOffset()-21),76,11);
-            if(this.getHealth()>35){
+            if(this.getHealth()>15){
                 g.setColor(Color.GREEN);
-                g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int)(getHealth()*1.5),10);
+                g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int)(getHealth()*3.8),10);
 
-            }else if(this.getHealth()>=15 && getHealth()<=35){
+            }else if(this.getHealth()>=5 && getHealth()<=15){
                 g.setColor(Color.YELLOW);
-                g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int)(getHealth()*1.5),10);
+                g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int)(getHealth()*3.8),10);
 
-            }else if(this.getHealth() < 15){
+            }else if(this.getHealth() < 5){
                 g.setColor(Color.RED);
-                g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int) (getHealth()*1.5),10);
+                g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int) (getHealth()*3.8),10);
 
             }
             g.setColor(Color.white);
