@@ -2,11 +2,15 @@ package Game.Entities.Creatures;
 
 import Game.Entities.EntityBase;
 import Game.Inventories.Inventory;
+import Game.Items.Item;
+import Game.Tiles.RockTile;
+import Game.Tiles.Tile;
 import Main.Handler;
 import Resources.Animation;
 import Resources.Images;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class ZombieEnemy extends CreatureBase  {
@@ -16,12 +20,16 @@ public class ZombieEnemy extends CreatureBase  {
     private int animWalkingSpeed = 150;
     private Inventory zombieInventory;
     private Rectangle zombieCam;
+    public static int zombieSpawnX = 600;
+    public static int zombieSpawnY = 700;
 
     private int healthcounter = 0;
 
     private Random randint;
     private int moveCount = 0;
     private int direction;
+    private int zombieX = 0;
+    private int zombieY = 0;
 
     public ZombieEnemy(Handler handler, float x, float y) {
         super(handler, x, y, CreatureBase.DEFAULT_CREATURE_WIDTH, CreatureBase.DEFAULT_CREATURE_HEIGHT);
@@ -74,6 +82,156 @@ public class ZombieEnemy extends CreatureBase  {
         zombieInventory.tick();
     }
 
+    @Override
+    public void move() {
+        if(!checkEntityCollisions(xMove, 0f))
+            moveX();
+        if(!checkEntityCollisions(0f, yMove))
+            moveY();
+    }
+
+    @Override
+    public void moveX() {
+        int tileX = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
+        boolean condition = collisionWithTile(tileX, (int) (y + bounds.y) / Tile.TILEHEIGHT);
+        boolean secondCondition = collisionWithTile(tileX, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT);
+        
+        if (xMove > 0) { // Moving right
+            if (!condition && !secondCondition) {
+                x += xMove;
+            } else {
+                zombieX = (int) ((x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH) - 1;
+                zombieY = (int) ((y + yMove + bounds.y) / Tile.TILEHEIGHT);
+                //System.out.println("RIGHT Y " + zombieY + "RIGHT X" +  zombieX);
+                System.out.println("PLAYER X" + handler.getWorld().getEntityManager().getPlayer().getX());
+                System.out.println("PLAYER X MOVE" + handler.getWorld().getEntityManager().getPlayer().getxMove());
+                //checkEmptyTrajectories(zombieX, zombieY); // TODO
+            }
+
+        } else if (xMove < 0) { // Moving left
+            tileX = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
+            condition = collisionWithTile(tileX, (int) (y + bounds.y) / Tile.TILEHEIGHT);
+            secondCondition = collisionWithTile(tileX, (int) (y + bounds.y + bounds.height) / Tile.TILEHEIGHT);
+            
+            if (!condition && !secondCondition) {
+                x += xMove;
+            } else {
+                x = tileX * Tile.TILEWIDTH + Tile.TILEWIDTH - bounds.x;
+                zombieX = (int) ((x + xMove + bounds.x) / Tile.TILEWIDTH) + 1;
+                zombieY = (int) ((y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT);
+                //System.out.println("LEFT Y " + zombieY + "LEFT X" +  zombieX);
+                System.out.println("PLAYER X" + handler.getWorld().getEntityManager().getPlayer().getX());
+                System.out.println("PLAYER X MOVE" + handler.getWorld().getEntityManager().getPlayer().getxMove());
+                //checkEmptyTrajectories(zombieX, zombieY); // TODO
+            }
+
+        }
+    }
+    
+    @Override
+    public void moveY() {
+        int tileY = (int) (y + yMove + bounds.y) / Tile.TILEHEIGHT;
+        boolean condition = collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, tileY);
+        boolean secondCondition = collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, tileY);
+        
+        if (yMove < 0) { //Up
+            if (!condition && !secondCondition) {
+                y += yMove;
+            } else {
+                y = tileY * Tile.TILEHEIGHT + Tile.TILEHEIGHT - bounds.y;
+                zombieX = (int) ((x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH);
+                zombieY = (int) ((y + yMove + bounds.y) / Tile.TILEHEIGHT) + 1;
+                //System.out.println("UP Y " + zombieY + "UP X" +  zombieX);
+                System.out.println("PLAYER Y" + handler.getWorld().getEntityManager().getPlayer().getY());
+                System.out.println("PLAYER Y MOVE" + handler.getWorld().getEntityManager().getPlayer().getyMove());
+                //checkEmptyTrajectories(zombieX, zombieY); // TODO
+            }
+
+        } else if (yMove > 0) { //Down
+            tileY = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
+            condition = collisionWithTile((int) (x + bounds.x) / Tile.TILEWIDTH, tileY);
+            secondCondition = collisionWithTile((int) (x + bounds.x + bounds.width) / Tile.TILEWIDTH, tileY);
+            
+            if (!condition && !secondCondition) {
+                y += yMove;
+            } else {
+                y = tileY * Tile.TILEHEIGHT - bounds.y - bounds.height - 1;
+                zombieX = (int) ((x + xMove + bounds.x) / Tile.TILEWIDTH);
+                zombieY = (int) ((y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT) - 1;
+                //System.out.println("DOWN Y " + zombieY + "DOWN X" +  zombieX);
+                System.out.println("PLAYER Y" + handler.getWorld().getEntityManager().getPlayer().getY());
+                System.out.println("PLAYER Y MOVE" + handler.getWorld().getEntityManager().getPlayer().getyMove());
+                //checkEmptyTrajectories(zombieX, zombieY); // TODO
+            }
+
+        }
+    }
+    
+    /*
+     * Checks for empty trajectories around the zombie if it's
+     * colliding with a solid item
+     */
+    // Method to check for empty blocks around the zombie and if it's empty,
+    // check which is closer to the current player coordinates and move there. Keep checking
+    // until there is no solid tile around or until the player is out of reach
+    private void checkEmptyTrajectories(int zombieX, int zombieY) {
+        // if going down or right 
+            // if player x - zombie x > 10
+                // return
+            // if player y - zombie y > 10
+                // return
+        // if going up or left
+            // if zombie x - player x > 10
+                // return
+            // if zombie y - player y > 10
+                // return
+        
+        // if blocks all around are empty
+            // return
+        
+        // if this is dead
+            // return
+
+        //Array list of coords instead of tiles
+        ArrayList<Point> tiles = new ArrayList<Point>();
+        Point topLeft = new Point(zombieX - 1, zombieY - 1);
+        Point topMid = new Point(zombieX, zombieY - 1);
+        Point topRight = new Point(zombieX + 1, zombieY - 1);
+        Point midLeft = new Point(zombieX - 1, zombieY);
+        Point midRight = new Point(zombieX + 1, zombieY);
+        Point bottomLeft = new Point(zombieX - 1, zombieY + 1);
+        Point bottomMid = new Point(zombieX, zombieY + 1);
+        Point bottomRight = new Point(zombieX + 1, zombieY + 1);
+        tiles.add(topLeft); tiles.add(topMid); tiles.add(topRight);
+        tiles.add(midLeft); tiles.add(midRight); tiles.add(bottomLeft);
+        tiles.add(bottomMid); tiles.add(bottomRight);
+        
+        int count = 0;
+        for (Point tileCoords : tiles) {
+            int tileX = (int) tileCoords.getX(); 
+            int tileY = (int) tileCoords.getY();
+            
+            if (!handler.getWorld().getTile(tileX, tileY).isSolid()) { tiles.remove(count); }
+            else {
+                float test = tileX - handler.getWorld().getEntityManager().getPlayer().getX();
+            }
+            count++;
+        }
+        
+        // TODO Check for entities (trees, bushes)
+
+        // get blocks all around
+            // if instance of RockTile or Tree or rock, bush, etc
+                // do nothing
+            // else 
+                // put in a list
+                // for item in list
+                    // minus player coords (which is closest to him or her)
+                    // get minimum (which is closest to player)
+                    // move there
+
+    }
+    
     private void checkIfMove() {
         xMove = 0;
         yMove = 0;
@@ -87,8 +245,8 @@ public class ZombieEnemy extends CreatureBase  {
         double playerHeight = handler.getWorld().getEntityManager().getPlayer().getHeight();
         double playerX = handler.getWorld().getEntityManager().getPlayer().getX();
         double playerY = handler.getWorld().getEntityManager().getPlayer().getY();
-        double cameraX = handler.getGameCamera().getxOffset();
-        double cameraY = handler.getGameCamera().getyOffset();
+        float cameraX = handler.getGameCamera().getxOffset();
+        float cameraY = handler.getGameCamera().getyOffset();
         
         if (zombieCam.contains(playerX - cameraX, playerY - cameraY) 
                 || zombieCam.contains(playerX - cameraX + playerWidth, playerY - cameraY + playerHeight)) {
@@ -173,11 +331,12 @@ public class ZombieEnemy extends CreatureBase  {
     }
 
     /*
-     * Add description
-     * @param
+     * Drops a zombie brain when it dies
      */
     @Override
     public void die() {
-        // Make it drop an item when it dies
+        randint = new Random();
+        //RNGR = randint.nextInt(3) + 1;
+       // handler.getWorld().getItemManager().addItem(Item.boneItem.createNew((int)x + bounds.x,(int)y + bounds.y,RNGR));
     }
 }
