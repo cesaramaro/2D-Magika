@@ -28,6 +28,7 @@ public class Chest extends StaticEntity {
     private int RNGR;
     private boolean opened = false;
     private Rectangle ir = new Rectangle();
+    private int timeOpen;
 
     public Chest(Handler handler, float x, float y, String type) {
         super(handler, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
@@ -60,6 +61,13 @@ public class Chest extends StaticEntity {
 
     @Override
     public void tick() {
+    	if(opened) {
+    		timeOpen++;
+    	}
+    	if(timeOpen>=300) {
+    		opened = false;
+    		timeOpen = 0;
+    	}
         if(isBeinghurt()) { 
         	deliverItems();
         	if(opened) {
@@ -85,7 +93,7 @@ public class Chest extends StaticEntity {
         	health = 1000000;
         	
     	}
-        if(handler.getWorld().getEntityManager().getPlayer().getQuestItems().getQuestItems().isEmpty()) {
+        if(handler.getWorld().getEntityManager().getPlayer().getQuestItems().getQuestItems().isEmpty()&& !handler.getWorld().getWorldStart()) {
         	active = false;
     		die();
         }

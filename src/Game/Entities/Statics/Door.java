@@ -41,7 +41,7 @@ public class Door extends StaticEntity {
 
     @Override
     public void tick() {
-
+    	
         if(isBeinghurt()){
             setHealth(10000000);
         }
@@ -73,8 +73,10 @@ public class Door extends StaticEntity {
         }else if(ir.contains(pr) && EP){
             g.drawImage(Images.EP,(int) x+width,(int) y+10,32,32,null);
             g.drawImage(Images.loading,0,0,800,600,null);
+            handler.getWorld().getEntityManager().getPlayer().getQuestItems().setActive(false);
+            handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(true);
             handler.setWorld(world);
-
+            handler.getWorld().setWorldStart(true);
         }
     }
 

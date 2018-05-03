@@ -10,6 +10,7 @@ import Resources.Animation;
 import Resources.Images;
 import Main.Handler;
 import Quests.Quest1;
+import Quests.Quest2;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -30,6 +31,7 @@ public class Player extends CreatureBase {
     //Inventory
     private Inventory inventory;
     private Quest1 quest1;
+    private Quest2 quest2;
     private QuestItems questItems;
     private SpellCastUI spellGUI;
 
@@ -76,6 +78,7 @@ public class Player extends CreatureBase {
         inventory= new Inventory(handler);
         spellGUI= new SpellCastUI(handler);
         quest1 = new Quest1(handler);
+        quest2 = new Quest2(handler);
         questItems = new QuestItems(handler);
     }
 
@@ -131,6 +134,7 @@ public class Player extends CreatureBase {
         //Inventory
         inventory.tick();
         quest1.tick();
+        quest2.tick();
         questItems.tick();
         //spellgui
         spellGUI.tick();
@@ -138,6 +142,7 @@ public class Player extends CreatureBase {
         if(handler.getKeyManager().lifebut && health < maxHealth) {
             this.health ++;
         }
+        
     }
     
     @Override
@@ -365,6 +370,9 @@ public class Player extends CreatureBase {
     }
     public Quest1 getQuest1() {
         return quest1;
+    }
+    public Quest2 getQuest2() {
+        return quest2;
     }
     public QuestItems getQuestItems() {
         return questItems;
