@@ -12,6 +12,7 @@ import Resources.Images;
 import Resources.Utils;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 /**
  * Created by Elemental on 2/10/2017.
@@ -57,8 +58,8 @@ public class BaseWorld {
             countP=0;
             State.setState(handler.getGame().pauseState);
         }
-        if(handler.getKeyManager().skipbut){
-        	//if(!handler.getWorld().equals(nextWorld)) {
+        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)){
+        	if(!handler.getWorld().equals(nextWorld)) {
         	g.drawImage(Images.loading,0,0,800,600,null);
         	handler.getWorld().getEntityManager().getPlayer().getQuestItems().setActive(false);
             if (currentWorld == 1) {
@@ -72,7 +73,7 @@ public class BaseWorld {
             entityManager.getPlayer().setY(spawnY);
         	handler.setWorld(nextWorld);
         	handler.getWorld().setWorldStart(true);
-        	//}
+        	}
       }
         if (worldStart) {
         	addQuestItems();
