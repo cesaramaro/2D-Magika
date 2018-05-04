@@ -22,7 +22,6 @@ public class Item {
     protected boolean pickedUp = false;
 
     protected Rectangle bounds;
-
     //handler
 
     public static Item[] items = new Item[256];
@@ -65,10 +64,19 @@ public class Item {
     public void tick(){
         if(handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0f,0f).intersects(bounds)){
             pickedUp=true;
-            handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(this);
+            goodieDetect();
         }
     }
-
+    public void goodieDetect() {
+    	if(this.name.equals("Medkit")) {
+    		handler.getWorld().getEntityManager().getPlayer().setHealth(handler.getWorld().getEntityManager().getPlayer().getMaxHealth());
+    	}else if(this.name.equals("Potion")) {
+    		System.out.println("Potion");
+    		handler.getWorld().getEntityManager().getPlayer().setPotionActive(true);
+    	}else {
+    		handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(this);
+    	}
+    }
     public void render(Graphics g){
         if(handler == null){
             return;

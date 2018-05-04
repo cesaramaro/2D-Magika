@@ -45,7 +45,12 @@ public class Player extends CreatureBase {
     private Boolean LaunchedFireBallU=false;
     private Boolean LaunchedFireBallD=false;
     private Boolean attacking=false;
-
+    
+    //Potion Variables
+    protected boolean potionActive = false;
+    protected int potionTime = 1200;
+    protected int timePassed = -1;
+    
     private int animWalkingSpeed = 150;
     private int animFireSpeed = 250;
     private int FireSpeed = 2;
@@ -85,6 +90,18 @@ public class Player extends CreatureBase {
 
     @Override
     public void tick() {
+    	if (potionActive) {
+        	timePassed ++ ;
+        	if(timePassed<=potionTime) {
+        		attack = 4;
+        	}else {
+        		potionActive = !potionActive;
+        		timePassed = -1;
+        	}
+        	
+        }else {
+        	attack = 2;
+        }
         //Animations
         animDown.tick();
         animUp.tick();
@@ -386,5 +403,8 @@ public class Player extends CreatureBase {
 
     public SpellCastUI getSpellGUI() {
         return spellGUI;
+    }
+    public void setPotionActive(boolean status) {
+    	this.potionActive = status;
     }
 }

@@ -212,6 +212,8 @@ public abstract class CreatureBase extends EntityBase {
         this.speed = speed;
     }
 
-
+    public int getMaxHealth() {
+        return maxHealth;
+    }
 
 }

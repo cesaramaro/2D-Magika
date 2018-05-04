@@ -68,7 +68,7 @@ public class Images {
         SpriteSheet zombieSheet = new SpriteSheet(Images.loadImage("/Sheets/enemies.png"));
 
 
-        blocks = new BufferedImage[16];
+        blocks = new BufferedImage[17];
 
         player_left = new BufferedImage[4];
         player_right = new BufferedImage[4];
@@ -181,7 +181,7 @@ public class Images {
             items[2]= newsheet.crop(151,487,30,25);//bone
             items[3]= newsheet.crop(186,488,30,30);//potion
             items[4]= newsheet.crop(217,488,30,30);//brain
-            items[5]= newsheet.crop(251,488,33,30);//medkit
+            items[5]= newsheet.crop(259,488,33,30);//medkit
             
             numbers[1]= numsheet.crop(17,15,17,22);
             numbers[2]= numsheet.crop(64,16,14,19);
@@ -221,6 +221,7 @@ public class Images {
             blocks[13] = newsheet.crop(176,0,Bwidth,Bheight*2);//tree
             blocks[14] = newsheet.crop(174,410,78,74);//rock
             blocks[15] = newsheet.crop(252,410,78,74);//bush
+            blocks[16] = newsheet.crop(259,333,73,73);//box
             
             //Chest
             chest[0] = Chestsheet.crop(1, 0, 30, 32);//closed
