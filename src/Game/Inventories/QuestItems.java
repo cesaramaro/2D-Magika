@@ -86,8 +86,13 @@ public class QuestItems {
             g.drawImage(QuestItems.get(1).getTexture(), 562, 83, QuestItems.get(1).getWidth(), QuestItems.get(1).getHeight(), null);
             g.drawString(String.valueOf(QuestItems.get(1).getCount()), 562+34,83+35);
         } if(QuestItems.size() >= 3) {
-            g.drawImage(QuestItems.get(2).getTexture(), 622, 83, QuestItems.get(2).getWidth(), QuestItems.get(2).getHeight(), null);
-            g.drawString(String.valueOf(QuestItems.get(2).getCount()), 622+34,83+35);
+        	if(QuestItems.get(2).getName().equals("Brain")) {
+        		g.drawImage(QuestItems.get(2).getTexture(), 617, 83, QuestItems.get(2).getWidth(), QuestItems.get(2).getHeight(), null);
+                g.drawString(String.valueOf(QuestItems.get(2).getCount()), 617+34,83+35);
+        	}else {
+        		g.drawImage(QuestItems.get(2).getTexture(), 622, 83, QuestItems.get(2).getWidth(), QuestItems.get(2).getHeight(), null);
+        		g.drawString(String.valueOf(QuestItems.get(2).getCount()), 622+34,83+35);
+        	}
         } if(QuestItems.size() >= 4) {
             g.drawImage(QuestItems.get(3).getTexture(), 679, 83, QuestItems.get(3).getWidth(), QuestItems.get(3).getHeight(), null);
             g.drawString(String.valueOf(QuestItems.get(3).getCount()), 679+34,83+35);

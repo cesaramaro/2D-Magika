@@ -46,6 +46,7 @@ public class SpellCastUI {
         if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_F)){
             active=!active;
             handler.getWorld().getEntityManager().getPlayer().getInventory().setActive(false);
+            handler.getWorld().getEntityManager().getPlayer().getQuestItems().setActive(false);
         }
         if(!active){
             return;

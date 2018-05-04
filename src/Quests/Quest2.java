@@ -27,12 +27,18 @@ public class Quest2 {
     public static Item rockItem = new Item(Images.blocks[14],"Rock",1);
     public static Item fireRuneItem = new Item(Images.Runes[2],"Fire Rune",2);
     public static Item boneItem = new Item(Images.items[2],"Bone",4);
+    public static Item potionItem = new Item(Images.items[3],"Potion",5);
+    public static Item brainItem = new Item(Images.items[4],"Brain",6);
+    public static Item medkitItem = new Item(Images.items[5],"Medkit",7);
+    
     public Quest2(Handler handler){
     	Quest2Items = new ArrayList<>();
 		woodItem.setCount(6);
         rockItem.setCount(5);
+        brainItem.setCount(1);
 		Quest2Items.add(woodItem);
 		Quest2Items.add(rockItem);
+		Quest2Items.add(brainItem);
         this.handler=handler;
         uiManager = new UIManager(handler);
 

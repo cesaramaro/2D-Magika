@@ -87,7 +87,7 @@ public class Images {
 
         butstart = new BufferedImage[3];
         particleSmoke = new BufferedImage[3];
-        items = new BufferedImage[3];
+        items = new BufferedImage[6];
         numbers = new BufferedImage[21];
         Resume = new BufferedImage[2];
         BTitle = new BufferedImage[2];
@@ -179,6 +179,9 @@ public class Images {
             items[0]= newsheet.crop(114,448,30,24);//log
             items[1]= newsheet.crop(114,489,30,25);//stick
             items[2]= newsheet.crop(151,487,30,25);//bone
+            items[3]= newsheet.crop(186,488,30,30);//potion
+            items[4]= newsheet.crop(217,488,30,30);//brain
+            items[5]= newsheet.crop(251,488,33,30);//medkit
             
             numbers[1]= numsheet.crop(17,15,17,22);
             numbers[2]= numsheet.crop(64,16,14,19);

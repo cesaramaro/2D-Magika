@@ -44,6 +44,7 @@ public class Inventory {
         if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_Q)){
             active=!active;
             handler.getWorld().getEntityManager().getPlayer().getSpellGUI().setActive(false);
+            handler.getWorld().getEntityManager().getPlayer().getQuestItems().setActive(false);
 
         }
 

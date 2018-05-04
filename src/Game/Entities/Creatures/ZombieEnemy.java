@@ -346,8 +346,6 @@ public class ZombieEnemy extends CreatureBase  {
      */
     @Override
     public void die() {
-        randint = new Random();
-        //RNGR = randint.nextInt(3) + 1;
-       // handler.getWorld().getItemManager().addItem(Item.boneItem.createNew((int)x + bounds.x,(int)y + bounds.y,RNGR));
+       handler.getWorld().getItemManager().addItem(Item.brainItem.createNew((int)x + bounds.x,(int)y + bounds.y,1));
     }
 }
