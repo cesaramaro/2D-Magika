@@ -29,6 +29,7 @@ public class Chest extends StaticEntity {
     private boolean opened = false;
     private Rectangle ir = new Rectangle();
     private int timeOpen;
+    public Boolean EP = false;
 
     public Chest(Handler handler, float x, float y, String type) {
         super(handler, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
@@ -39,23 +40,12 @@ public class Chest extends StaticEntity {
         health=1000000;
         this.type = type;
         
-        try {
-            audioFile = new File("res/music/Pickaxe.wav");
-            audioStream = AudioSystem.getAudioInputStream(audioFile);
-            format = audioStream.getFormat();
-            info = new DataLine.Info(Clip.class, format);
-            audioClip = (Clip) AudioSystem.getLine(info);
-            audioClip.open(audioStream);
-
-
-
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
-        }
+        ir.width = bounds.width;
+        ir.height = bounds.height;
+        int irx=(int)(bounds.x-handler.getGameCamera().getxOffset()+x);
+        int iry= (int)(bounds.y-handler.getGameCamera().getyOffset()+height);
+        ir.y=iry;
+        ir.x=irx;
 
     }
 
@@ -93,6 +83,12 @@ public class Chest extends StaticEntity {
         	health = 1000000;
         	
     	}
+        if(handler.getKeyManager().attbut){
+            EP=true;
+
+        }else if(!handler.getKeyManager().attbut){
+            EP=false;
+        }
         if(handler.getWorld().getEntityManager().getPlayer().getQuestItems().getQuestItems().isEmpty()&& !handler.getWorld().getWorldStart()) {
         	active = false;
     		die();
@@ -123,8 +119,15 @@ public class Chest extends StaticEntity {
         else {
         	g.drawImage(Images.chest[1],(int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()),width,height,null);
         }
+        checkForPlayer(g, handler.getWorld().getEntityManager().getPlayer());
     }
+    private void checkForPlayer(Graphics g, Player p) {
+        Rectangle pr = p.getCollisionBounds(0,0);
 
+        if (ir.contains(pr) && !EP) {
+            g.drawImage(Images.E,(int) x+width,(int) y+10+10,32,32,null);
+        }
+    }
     @Override
     public void die() {
     	for(int i = 0; i < handler.getWorld().getEntityManager().getEntities().size();i++) {
