@@ -1,7 +1,6 @@
 package Game.Entities.Creatures;
 
 import Game.Entities.EntityBase;
-import Game.GameStates.State;
 import Game.Inventories.Inventory;
 import Game.Inventories.QuestItems;
 import Game.Items.Item;
@@ -15,6 +14,8 @@ import Quests.Quest2;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+
+import Display.DisplayScreen;
 
 /**
  * Created by Elemental on 1/1/2017.
@@ -255,12 +256,14 @@ public class Player extends CreatureBase {
     }
 
     @Override
-    public void die(){
+    public void die() {
         System.out.println("You lose");
-        State.setState(handler.getGame().menuState);
+        DisplayScreen display;
+        display = new DisplayScreen(handler, handler.getGame().title, handler.getGame().getWidth(), handler.getGame().getHeight());
+        display.showWindow(display.getFrame(), "You died! Better luck next time");
     }
-
-    private void getInput(){
+    
+    private void getInput() {
         xMove = 0;
         yMove = 0;
 
