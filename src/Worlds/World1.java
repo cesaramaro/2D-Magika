@@ -35,6 +35,7 @@ public class World1 extends BaseWorld{
         entityManager.addEntity(new SkelyEnemy(handler, 1250, 500));
         entityManager.addEntity(new SkelyEnemy(handler, 500, 700));
         entityManager.addEntity(new SkelyEnemy(handler, 600, 1250));
+        entityManager.addEntity(new ZombieEnemy(handler, 600, 600));
         entityManager.addEntity(new Bush(handler,445,185,"Bush"));
         entityManager.addEntity(new Bush(handler, 960, 320, "Bush"));
         entityManager.addEntity(new Bush(handler, 320, 960, "Bush"));
