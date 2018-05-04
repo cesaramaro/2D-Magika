@@ -47,12 +47,16 @@ public class World1 extends BaseWorld{
         //Player Spawn Point
         entityManager.getPlayer().setX(spawnX);
         entityManager.getPlayer().setY(spawnY);
-        nextWorld = caveWorld; //Sets next world (makes skip possible)
+         
     }
     @Override
     public void addQuestItems() { //adds quest Items (Runs only one time. Called in BaseWorld)
     	for (Item item : handler.getWorld().getEntityManager().getPlayer().getQuest1().getQuest1Items()) {
 			QuestItems.addItem(item);
 		}
+    }
+    @Override 
+    public void setNextWorld(){ //Sets next world (makes skip possible)
+    	nextWorld = caveWorld;
     }
 }

@@ -44,7 +44,7 @@ public class CaveWorld extends BaseWorld {
         
         entityManager.getPlayer().setX(spawnX);
         entityManager.getPlayer().setY(spawnY);
-        nextWorld = darkWorld;
+        
     }
 
     @Override
@@ -52,5 +52,9 @@ public class CaveWorld extends BaseWorld {
     	for (Item item : handler.getWorld().getEntityManager().getPlayer().getQuest2().getQuest2Items()) {
 			QuestItems.addItem(item);
 		}
+    }
+    @Override 
+    public void setNextWorld(){ //Sets next world (makes skip possible)
+    	nextWorld = darkWorld;
     }
 }

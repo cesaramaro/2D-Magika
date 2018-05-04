@@ -77,6 +77,7 @@ public class BaseWorld {
       }
         if (worldStart) {
         	addQuestItems();
+        	setNextWorld();
         	worldStart = false;
         }
         
@@ -138,6 +139,9 @@ public class BaseWorld {
 
     }
     public void addQuestItems() {
+    	
+    }   
+    public void setNextWorld() {
     	
     }
     public int getWidth(){
