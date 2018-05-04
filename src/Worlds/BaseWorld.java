@@ -27,7 +27,7 @@ public class BaseWorld {
     protected EntityManager entityManager;
     protected Quest1 quest1;
     protected boolean worldStart;
-//    public int currentWorld;
+    public int currentWorld;
 
     //Item
     protected ItemManager itemManager;
@@ -58,21 +58,21 @@ public class BaseWorld {
             State.setState(handler.getGame().pauseState);
         }
         if(handler.getKeyManager().skipbut){
-        	if(!handler.getWorld().equals(nextWorld)) {
+        	//if(!handler.getWorld().equals(nextWorld)) {
         	g.drawImage(Images.loading,0,0,800,600,null);
         	handler.getWorld().getEntityManager().getPlayer().getQuestItems().setActive(false);
-//            if (currentWorld == 1) {
-//                handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(true);
-//            } else if (currentWorld == 2) {
-//                handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(false);
-//            }
-            handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(true);
+            if (currentWorld == 1) {
+                handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(true);
+            } else if (currentWorld == 2) {
+                handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(false);
+            }
+            //handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(true);
             handler.getWorld().getEntityManager().getPlayer().getQuestItems().getQuestItems().clear();
             entityManager.getPlayer().setX(spawnX);
             entityManager.getPlayer().setY(spawnY);
         	handler.setWorld(nextWorld);
         	handler.getWorld().setWorldStart(true);
-        	}
+        	//}
       }
         if (worldStart) {
         	addQuestItems();

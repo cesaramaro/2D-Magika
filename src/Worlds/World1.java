@@ -22,6 +22,7 @@ public class World1 extends BaseWorld{
     public World1(Handler handler, String path, Player player){
         super(handler,path,player);
         this.handler = handler;
+        currentWorld = 1;
         caveWorld = new CaveWorld(handler,"res/Maps/caveMap.map",player);
         // Entities in World
         entityManager.addEntity(new Tree(handler, 100, 250,"Tree"));

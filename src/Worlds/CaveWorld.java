@@ -34,7 +34,6 @@ public class CaveWorld extends BaseWorld {
         entityManager.addEntity(new Tree(handler, 100, 620, "Tree"));
         entityManager.addEntity(new Tree(handler, 600, 500, "Tree"));
         entityManager.addEntity(new Rock(handler, 700, 83, "Rock"));
-        entityManager.addEntity(new Rock(handler, 700, 83, "Rock"));
         entityManager.addEntity(new Rock(handler, 528, 276, "Rock"));
         entityManager.addEntity(new Rock(handler, 684, 1370, "Rock"));
         entityManager.addEntity(new Rock(handler, 765, 888, "Rock"));
