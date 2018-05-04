@@ -68,13 +68,17 @@ public class Door extends StaticEntity {
     private void checkForPlayer(Graphics g, Player p) {
         Rectangle pr = p.getCollisionBounds(0,0);
 
-        if(ir.contains(pr) && !EP){
+        if (ir.contains(pr) && !EP) {
             g.drawImage(Images.E,(int) x+width,(int) y+10,32,32,null);
-        }else if(ir.contains(pr) && EP){
-            g.drawImage(Images.EP,(int) x+width,(int) y+10,32,32,null);
-            g.drawImage(Images.loading,0,0,800,600,null);
+        } else if (ir.contains(pr) && EP) {
+            g.drawImage(Images.EP, (int) x + width, (int) y + 10, 32, 32, null);
+            g.drawImage(Images.loading, 0, 0, 800, 600, null);
             handler.getWorld().getEntityManager().getPlayer().getQuestItems().setActive(false);
-            handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(true);
+            if (handler.getWorld().currentWorld == 1) {
+                handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(true);
+            } else if (handler.getWorld().currentWorld == 2) {
+                handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(false);
+            }
             handler.setWorld(world);
             handler.getWorld().setWorldStart(true);
         }
