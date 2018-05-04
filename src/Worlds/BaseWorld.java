@@ -27,6 +27,7 @@ public class BaseWorld {
     protected EntityManager entityManager;
     protected Quest1 quest1;
     protected boolean worldStart;
+//    public int currentWorld;
 
     //Item
     protected ItemManager itemManager;
@@ -60,6 +61,11 @@ public class BaseWorld {
         	if(!handler.getWorld().equals(nextWorld)) {
         	g.drawImage(Images.loading,0,0,800,600,null);
         	handler.getWorld().getEntityManager().getPlayer().getQuestItems().setActive(false);
+//            if (currentWorld == 1) {
+//                handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(true);
+//            } else if (currentWorld == 2) {
+//                handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(false);
+//            }
             handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(true);
             handler.getWorld().getEntityManager().getPlayer().getQuestItems().getQuestItems().clear();
             entityManager.getPlayer().setX(spawnX);

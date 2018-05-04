@@ -75,7 +75,7 @@ public class Game implements Runnable {
     }
 
     private void init(){
-        display = new DisplayScreen(title, width, height);
+        display = new DisplayScreen(handler, title, width, height);
         display.getFrame().addKeyListener(keyManager);
         display.getFrame().addMouseListener(mouseManager);
         display.getFrame().addMouseMotionListener(mouseManager);

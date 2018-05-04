@@ -14,7 +14,9 @@ public class DarkWorld extends BaseWorld    {
     public DarkWorld(Handler handler, String path, Player player){
         super(handler,path,player);
         this.handler = handler;
-
+        this.player = player;
+        
+        currentWorld = 3;
         entityManager.addEntity(new Rock(handler, 100, 250, "Rock"));
         entityManager.addEntity(new Tree(handler, 100, 450, "Tree"));
         entityManager.addEntity(new Rock(handler, 528, 276, "Rock"));

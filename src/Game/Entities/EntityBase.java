@@ -5,6 +5,9 @@ import Main.Handler;
 
 import java.awt.*;
 
+import Game.Entities.Creatures.Player;
+import Game.Tiles.Tile;
+
 /**
  * Created by Elemental on 1/1/2017.
  */
@@ -77,7 +80,24 @@ public abstract class EntityBase {
     public Rectangle getCollisionBounds(float xOffset, float yOffset){
         return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
     }
+    
+    /*
+     * Get an x, y location if it's a player
+     * @return Point - x, y location of the player relative to the blocks
+     */
+    public Point getLocation() {
+        if (this instanceof Player) {
+            double pXMove = handler.getWorld().getEntityManager().getPlayer().getxMove();
+            double pYMove = handler.getWorld().getEntityManager().getPlayer().getyMove();
 
+            int playerX = (int) ((this.x + pXMove + this.bounds.x + this.bounds.width) / Tile.TILEWIDTH);
+            int playerY = (int) ((this.y + pYMove + this.bounds.y + this.bounds.height) / Tile.TILEHEIGHT);
+
+            return new Point (playerX, playerY);
+        }
+        return null;
+    }
+    
     public boolean isBeinghurt() {
         return beinghurt;
     }

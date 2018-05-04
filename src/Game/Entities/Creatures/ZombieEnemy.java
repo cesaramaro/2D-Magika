@@ -2,15 +2,12 @@ package Game.Entities.Creatures;
 
 import Game.Entities.EntityBase;
 import Game.Inventories.Inventory;
-import Game.Items.Item;
-import Game.Tiles.RockTile;
 import Game.Tiles.Tile;
 import Main.Handler;
 import Resources.Animation;
 import Resources.Images;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class ZombieEnemy extends CreatureBase  {
@@ -22,14 +19,18 @@ public class ZombieEnemy extends CreatureBase  {
     private Rectangle zombieCam;
     public static int zombieSpawnX = 600;
     public static int zombieSpawnY = 700;
+    Point previousBlock = new Point();
+    private boolean avoidingWall = false;
+    private boolean noWallsAround = true;
 
     private int healthcounter = 0;
 
     private Random randint;
     private int moveCount = 0;
     private int direction;
-    private int zombieX = 0;
-    private int zombieY = 0;
+    private int zombieX;
+    private int zombieY;
+    private int recursiveCount = 0;
 
     public ZombieEnemy(Handler handler, float x, float y) {
         super(handler, x, y, CreatureBase.DEFAULT_CREATURE_WIDTH, CreatureBase.DEFAULT_CREATURE_HEIGHT);
@@ -65,9 +66,12 @@ public class ZombieEnemy extends CreatureBase  {
             moveCount = 0;
             direction = randint.nextInt(4) + 1;
         }
-        checkIfMove();
-        move();
-
+        
+        if (!avoidingWall) {
+            move();
+            checkIfMove();
+        }
+        
         if (isBeinghurt()) {
             healthcounter++;
             if (healthcounter >= 120) {
@@ -100,12 +104,11 @@ public class ZombieEnemy extends CreatureBase  {
             if (!condition && !secondCondition) {
                 x += xMove;
             } else {
+                x = tileX * Tile.TILEWIDTH - bounds.x - bounds.width - 1;
                 zombieX = (int) ((x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH) - 1;
                 zombieY = (int) ((y + yMove + bounds.y) / Tile.TILEHEIGHT);
-                //System.out.println("RIGHT Y " + zombieY + "RIGHT X" +  zombieX);
-                System.out.println("PLAYER X" + handler.getWorld().getEntityManager().getPlayer().getX());
-                System.out.println("PLAYER X MOVE" + handler.getWorld().getEntityManager().getPlayer().getxMove());
-                //checkEmptyTrajectories(zombieX, zombieY); // TODO
+                avoidingWall = true;
+                checkEmptyTrajectories(zombieX, zombieY);
             }
 
         } else if (xMove < 0) { // Moving left
@@ -119,12 +122,9 @@ public class ZombieEnemy extends CreatureBase  {
                 x = tileX * Tile.TILEWIDTH + Tile.TILEWIDTH - bounds.x;
                 zombieX = (int) ((x + xMove + bounds.x) / Tile.TILEWIDTH) + 1;
                 zombieY = (int) ((y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT);
-                //System.out.println("LEFT Y " + zombieY + "LEFT X" +  zombieX);
-                System.out.println("PLAYER X" + handler.getWorld().getEntityManager().getPlayer().getX());
-                System.out.println("PLAYER X MOVE" + handler.getWorld().getEntityManager().getPlayer().getxMove());
-                //checkEmptyTrajectories(zombieX, zombieY); // TODO
+                avoidingWall = true;
+                checkEmptyTrajectories(zombieX, zombieY);
             }
-
         }
     }
     
@@ -140,11 +140,9 @@ public class ZombieEnemy extends CreatureBase  {
             } else {
                 y = tileY * Tile.TILEHEIGHT + Tile.TILEHEIGHT - bounds.y;
                 zombieX = (int) ((x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH);
-                zombieY = (int) ((y + yMove + bounds.y) / Tile.TILEHEIGHT) + 1;
-                //System.out.println("UP Y " + zombieY + "UP X" +  zombieX);
-                System.out.println("PLAYER Y" + handler.getWorld().getEntityManager().getPlayer().getY());
-                System.out.println("PLAYER Y MOVE" + handler.getWorld().getEntityManager().getPlayer().getyMove());
-                //checkEmptyTrajectories(zombieX, zombieY); // TODO
+                zombieY = (int) ((y + yMove + bounds.y) / Tile.TILEHEIGHT) + 1; 
+                avoidingWall = true;
+                checkEmptyTrajectories(zombieX, zombieY);
             }
 
         } else if (yMove > 0) { //Down
@@ -158,12 +156,9 @@ public class ZombieEnemy extends CreatureBase  {
                 y = tileY * Tile.TILEHEIGHT - bounds.y - bounds.height - 1;
                 zombieX = (int) ((x + xMove + bounds.x) / Tile.TILEWIDTH);
                 zombieY = (int) ((y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT) - 1;
-                //System.out.println("DOWN Y " + zombieY + "DOWN X" +  zombieX);
-                System.out.println("PLAYER Y" + handler.getWorld().getEntityManager().getPlayer().getY());
-                System.out.println("PLAYER Y MOVE" + handler.getWorld().getEntityManager().getPlayer().getyMove());
-                //checkEmptyTrajectories(zombieX, zombieY); // TODO
+                avoidingWall = true;
+                checkEmptyTrajectories(zombieX, zombieY);
             }
-
         }
     }
     
@@ -175,61 +170,88 @@ public class ZombieEnemy extends CreatureBase  {
     // check which is closer to the current player coordinates and move there. Keep checking
     // until there is no solid tile around or until the player is out of reach
     private void checkEmptyTrajectories(int zombieX, int zombieY) {
-        // if going down or right 
-            // if player x - zombie x > 10
-                // return
-            // if player y - zombie y > 10
-                // return
-        // if going up or left
-            // if zombie x - player x > 10
-                // return
-            // if zombie y - player y > 10
-                // return
+        // Temporary so it doesn't throw a StackOverflow error
+        if (recursiveCount > 1000) {
+            avoidingWall = false;
+            noWallsAround = true;
+            return;
+        }
+        int playerX = handler.getWorld().getEntityManager().getPlayer().getLocation().x;
+        int playerY = handler.getWorld().getEntityManager().getPlayer().getLocation().y;
         
-        // if blocks all around are empty
-            // return
+        avoidingWall = true;
+        noWallsAround = true;
+        double zombiePlayerDistance;
         
-        // if this is dead
-            // return
-
-        //Array list of coords instead of tiles
-        ArrayList<Point> tiles = new ArrayList<Point>();
-        Point topLeft = new Point(zombieX - 1, zombieY - 1);
-        Point topMid = new Point(zombieX, zombieY - 1);
-        Point topRight = new Point(zombieX + 1, zombieY - 1);
-        Point midLeft = new Point(zombieX - 1, zombieY);
-        Point midRight = new Point(zombieX + 1, zombieY);
-        Point bottomLeft = new Point(zombieX - 1, zombieY + 1);
-        Point bottomMid = new Point(zombieX, zombieY + 1);
-        Point bottomRight = new Point(zombieX + 1, zombieY + 1);
-        tiles.add(topLeft); tiles.add(topMid); tiles.add(topRight);
-        tiles.add(midLeft); tiles.add(midRight); tiles.add(bottomLeft);
-        tiles.add(bottomMid); tiles.add(bottomRight);
+        // Distance formula => d = √((x2 -x1)^2 + (y2 - y1)^2)
+        double zombiePlayerDistanceP1 = Math.pow((playerX - zombieX), 2);
+        double zombiePlayerDistanceP2 = Math.pow((playerY - zombieY), 2);
+        zombiePlayerDistance = Math.sqrt(zombiePlayerDistanceP1 + zombiePlayerDistanceP2);
         
-        int count = 0;
-        for (Point tileCoords : tiles) {
-            int tileX = (int) tileCoords.getX(); 
-            int tileY = (int) tileCoords.getY();
-            
-            if (!handler.getWorld().getTile(tileX, tileY).isSolid()) { tiles.remove(count); }
-            else {
-                float test = tileX - handler.getWorld().getEntityManager().getPlayer().getX();
-            }
-            count++;
+        // Exit conditions
+        if ((this.getHealth() < 0) || (zombiePlayerDistance > 5))  {
+            avoidingWall = false;
+            return;
         }
         
-        // TODO Check for entities (trees, bushes)
+        // Array of nearby tiles (x, y)
+        Point up = new Point(zombieX, zombieY - 1);
+        Point down = new Point(zombieX, zombieY + 1);
+        Point left = new Point(zombieX - 1, zombieY);
+        Point right = new Point(zombieX + 1, zombieY);
+        Point[] tiles = { up, down, left, right };
+        
+        double minDistance = 0;
+        Point closestBlock = new Point();
+        
+        for (int i = 0; i < tiles.length; i++) {
+            int tileX = (int) tiles[i].getX(); 
+            int tileY = (int) tiles[i].getY();
 
-        // get blocks all around
-            // if instance of RockTile or Tree or rock, bush, etc
-                // do nothing
-            // else 
-                // put in a list
-                // for item in list
-                    // minus player coords (which is closest to him or her)
-                    // get minimum (which is closest to player)
-                    // move there
+            if (handler.getWorld().getTile(tileX, tileY).isSolid()) { noWallsAround = false; }
+            else {
+                // If it's the last iteration and no solid blocks were found
+                // it changes noWallsAround to true and exits the method
+                if ((i == tiles.length - 1) && noWallsAround) { 
+                    avoidingWall = false;
+                    return;
+                }
+                
+                if (closestBlock.x == tileX && closestBlock.y == tileY) { /* Do nothing*/ }
+                else {
+                    // Distance formula => d = √((x2 -x1)^2 + (y2 - y1)^2)
+                    double xDistance = Math.pow((playerX - tileX), 2);
+                    double yDistance = Math.pow((playerY - tileY), 2);
+                    double distance = Math.sqrt(xDistance + yDistance);
 
+                    if (i == 0 || distance < minDistance) {
+                        minDistance = distance;
+                        closestBlock = tiles[i];
+                    }
+                }
+            }
+        }
+        
+        // Exit condition
+        if (noWallsAround) {
+            avoidingWall = false;
+            return;
+        }
+        
+        previousBlock = closestBlock;
+        float xToMove = ((closestBlock.x - zombieX) * speed);
+        float yToMove = ((closestBlock.y - zombieY) * speed);
+        
+        this.setxMove(xToMove); this.setyMove(yToMove);
+        x += xMove; y += yMove; // checkIfMove();
+
+        System.out.println("Closest empty tile is " + closestBlock);
+        recursiveCount++;
+        checkEmptyTrajectories(closestBlock.x, closestBlock.y);
+
+        // TODO Check for the corners to see which is the better option
+        // if they have the same distance
+        // TODO Check for static entities and not just "walls" (rock tiles)
     }
     
     private void checkIfMove() {
@@ -322,23 +344,12 @@ public class ZombieEnemy extends CreatureBase  {
                 (int) (y - handler.getGameCamera().getyOffset()), 
                 width, height, null);
 
-        g.setColor(Color.BLACK);
-        g.drawRect((int)(x-handler.getGameCamera().getxOffset()-1),(int)(y-handler.getGameCamera().getyOffset()-21),76,11);
-        if(this.getHealth()>35){
-            g.setColor(Color.GREEN);
-            g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int)(getHealth()*1.5),10);
-
-        }else if(this.getHealth()>=15 && getHealth()<=35){
-            g.setColor(Color.YELLOW);
-            g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int)(getHealth()*1.5),10);
-
-        }else if(this.getHealth() < 15){
-            g.setColor(Color.RED);
-            g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int) (getHealth()*1.5),10);
-
+        if (isBeinghurt() && healthcounter <= 120) {
+            g.setColor(Color.WHITE);
+            g.drawString("Zombie Health: " + getHealth(),
+                    (int) (x-handler.getGameCamera().getxOffset()),
+                    (int) (y-handler.getGameCamera().getyOffset()-20));
         }
-        g.setColor(Color.white);
-        g.drawString("Health: " + getHealth(),(int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-10));
     }
 
     /*

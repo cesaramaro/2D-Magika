@@ -32,16 +32,17 @@ public class World1 extends BaseWorld{
         entityManager.addEntity(new Rock(handler, 88, 1345,"Rock"));
         entityManager.addEntity(new Tree(handler, 77, 700,"Tree"));
         entityManager.addEntity(new Rock(handler, 700, 83,"Rock"));
-        entityManager.addEntity(new Door(handler, 100, 0, caveWorld, "Door"));
-        entityManager.addEntity(new SkelyEnemy(handler, 1250, 500));
-        entityManager.addEntity(new SkelyEnemy(handler, 500, 700));
-        entityManager.addEntity(new SkelyEnemy(handler, 600, 1250));
         entityManager.addEntity(new Bush(handler,445,185,"Bush"));
         entityManager.addEntity(new Bush(handler, 960, 320, "Bush"));
         entityManager.addEntity(new Bush(handler, 320, 960, "Bush"));
         entityManager.addEntity(new Chest(handler,250,0,"Chest"));
         entityManager.addEntity(new Bush(handler,700,185,"Bush"));
         entityManager.addEntity(new Bush(handler,575,895,"Bush"));
+        entityManager.addEntity(new Door(handler, 100, 0, caveWorld, "Door"));
+        entityManager.addEntity(new SkelyEnemy(handler, 1250, 500));
+        entityManager.addEntity(new SkelyEnemy(handler, 500, 700));
+        entityManager.addEntity(new SkelyEnemy(handler, 600, 1250));
+        
         //Player Spawn Point
         entityManager.getPlayer().setX(spawnX);
         entityManager.getPlayer().setY(spawnY);
