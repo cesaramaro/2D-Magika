@@ -4,12 +4,9 @@ import Game.Entities.Creatures.Player;
 import Game.Entities.Creatures.SkelyEnemy;
 import Game.Entities.Creatures.ZombieEnemy;
 import Game.Entities.Statics.*;
-import Game.GameStates.State;
 import Game.Inventories.QuestItems;
 import Game.Items.Item;
 import Main.Handler;
-import Quests.Quest1;
-import Resources.Images;
 
 /**
  * Created by Elemental on 1/2/2017.

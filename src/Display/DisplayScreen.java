@@ -4,7 +4,6 @@ import java.awt.*;
 import java.net.URL;
 import javax.swing.*;
 
-import Game.GameStates.State;
 import Main.Handler;
 
 public class DisplayScreen {
@@ -56,7 +55,7 @@ public class DisplayScreen {
      * @param String - message to be printed out on the window
      */
     Object[] options = { "Exit", "Play Again" };
-    public void showWindow(JFrame myFrame, String message) {
+    public void showWindow(String message) {
         JOptionPane pane = new JOptionPane();
         pane.setMessage(message);
         pane.setOptions(options);
@@ -68,19 +67,17 @@ public class DisplayScreen {
         Object selectedValue = pane.getValue();
         
         if (selectedValue.equals(options[1])) {
-            myFrame.dispose();
-            State.setState(handler.getGame().menuState);
-        }
-        else if (selectedValue.equals(options[0])) {
+            dialog.dispose();
+        } else if (selectedValue.equals(options[0])) {
             System.exit(0);
         }
     }
     
-	public Canvas getCanvas(){
+	public Canvas getCanvas() {
 		return canvas;
 	}
 	
-	public JFrame getFrame(){
+	public JFrame getFrame() {
 		return frame;
 	}
 	

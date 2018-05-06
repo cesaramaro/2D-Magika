@@ -223,4 +223,8 @@ public class Game implements Runnable {
     public int getHeight(){
         return height;
     }
+    
+    public DisplayScreen getDisplay() {
+        return display;
+    }
 }

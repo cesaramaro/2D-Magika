@@ -1,6 +1,8 @@
 package Game.Entities.Creatures;
 
 import Game.Entities.EntityBase;
+import Game.GameStates.MenuState;
+import Game.GameStates.State;
 import Game.Inventories.Inventory;
 import Game.Inventories.QuestItems;
 import Game.Items.Item;
@@ -274,10 +276,10 @@ public class Player extends CreatureBase {
 
     @Override
     public void die() {
+        State.setState(handler.getGame().menuState);
         System.out.println("You lose");
-        DisplayScreen display;
-        display = new DisplayScreen(handler, handler.getGame().title, handler.getGame().getWidth(), handler.getGame().getHeight());
-        display.showWindow(display.getFrame(), "You died! Better luck next time");
+        DisplayScreen display = handler.getGame().getDisplay();
+        display.showWindow("You died! Better luck next time");
     }
     
     private void getInput() {

@@ -16,6 +16,8 @@ public class Images {
     private static final int Fwidth = 512, Fheight = 197;
     private static final int ZOMBIE_WIDTH = 32, ZOMBIE_HEIGHT = 32;
     private static final int ZOMBIE_X = 96;
+    private static final int BOSS_WIDTH = 32, BOSS_HEIGHT = 32;
+    private static final int BOSS_X = 288;
 
     public static BufferedImage[] blocks;
     public static BufferedImage[] player_right;
@@ -30,6 +32,10 @@ public class Images {
     public static BufferedImage[] zombieEnemy_left;
     public static BufferedImage[] zombieEnemy_front;
     public static BufferedImage[] zombieEnemy_back;
+    public static BufferedImage[] bossEnemy_right;
+    public static BufferedImage[] bossEnemy_left;
+    public static BufferedImage[] bossEnemy_front;
+    public static BufferedImage[] bossEnemy_back;
     public static BufferedImage[] butstart;
     public static BufferedImage[] particleSmoke;
     public static BufferedImage[] items;
@@ -65,7 +71,7 @@ public class Images {
         SpriteSheet FireBallDownsheet = new SpriteSheet(Images.loadImage("/Sheets/FireBallDown.png"));
         SpriteSheet Chestsheet = new SpriteSheet(Images.loadImage("/Sheets/chest2.png"));
         SpriteSheet Questsheet = new SpriteSheet(Images.loadImage("/Sheets/quest.png"));
-        SpriteSheet zombieSheet = new SpriteSheet(Images.loadImage("/Sheets/enemies.png"));
+        SpriteSheet enemySheet = new SpriteSheet(Images.loadImage("/Sheets/enemies.png"));
 
 
         blocks = new BufferedImage[17];
@@ -84,6 +90,11 @@ public class Images {
         zombieEnemy_right = new BufferedImage[3];
         zombieEnemy_front = new BufferedImage[3];
         zombieEnemy_back = new BufferedImage[3];
+        
+        bossEnemy_left = new BufferedImage[3];
+        bossEnemy_right = new BufferedImage[3];
+        bossEnemy_front = new BufferedImage[3];
+        bossEnemy_back = new BufferedImage[3];
 
         butstart = new BufferedImage[3];
         particleSmoke = new BufferedImage[3];
@@ -275,22 +286,39 @@ public class Images {
             SkelyEnemy_back[2]=newsheet.crop(196,227+130,width,height);
             SkelyEnemy_back[3]=newsheet.crop(228,227+130,28,height);
             
-// Zombie enemy animation
-            zombieEnemy_front[0] = zombieSheet.crop(ZOMBIE_X, 0, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
-            zombieEnemy_front[1] = zombieSheet.crop((ZOMBIE_X + ZOMBIE_WIDTH), 0, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
-            zombieEnemy_front[2] = zombieSheet.crop((ZOMBIE_X + ZOMBIE_WIDTH * 2), 0, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            // Zombie enemy animation
+            zombieEnemy_front[0] = enemySheet.crop(ZOMBIE_X, 0, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_front[1] = enemySheet.crop((ZOMBIE_X + ZOMBIE_WIDTH), 0, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_front[2] = enemySheet.crop((ZOMBIE_X + ZOMBIE_WIDTH * 2), 0, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
 
-            zombieEnemy_left[0] = zombieSheet.crop(ZOMBIE_X, 32, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
-            zombieEnemy_left[1] = zombieSheet.crop((ZOMBIE_X + ZOMBIE_WIDTH), 32, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
-            zombieEnemy_left[2] = zombieSheet.crop((ZOMBIE_X + ZOMBIE_WIDTH * 2), 32, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_left[0] = enemySheet.crop(ZOMBIE_X, 32, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_left[1] = enemySheet.crop((ZOMBIE_X + ZOMBIE_WIDTH), 32, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_left[2] = enemySheet.crop((ZOMBIE_X + ZOMBIE_WIDTH * 2), 32, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
 
-            zombieEnemy_right[0] = zombieSheet.crop(ZOMBIE_X, 64, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
-            zombieEnemy_right[1] = zombieSheet.crop((ZOMBIE_X + ZOMBIE_WIDTH), 64, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
-            zombieEnemy_right[2] = zombieSheet.crop((ZOMBIE_X + ZOMBIE_WIDTH * 2), 64, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_right[0] = enemySheet.crop(ZOMBIE_X, 64, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_right[1] = enemySheet.crop((ZOMBIE_X + ZOMBIE_WIDTH), 64, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_right[2] = enemySheet.crop((ZOMBIE_X + ZOMBIE_WIDTH * 2), 64, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
 
-            zombieEnemy_back[0] = zombieSheet.crop(ZOMBIE_X, 96, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
-            zombieEnemy_back[1] = zombieSheet.crop((ZOMBIE_X + ZOMBIE_WIDTH), 96, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
-            zombieEnemy_back[2] = zombieSheet.crop((ZOMBIE_X + ZOMBIE_WIDTH * 2), 96, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_back[0] = enemySheet.crop(ZOMBIE_X, 96, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_back[1] = enemySheet.crop((ZOMBIE_X + ZOMBIE_WIDTH), 96, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            zombieEnemy_back[2] = enemySheet.crop((ZOMBIE_X + ZOMBIE_WIDTH * 2), 96, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+            
+            // Boss enemy animation
+            bossEnemy_front[0] = enemySheet.crop(BOSS_X, 0, BOSS_WIDTH, BOSS_HEIGHT);
+            bossEnemy_front[1] = enemySheet.crop((BOSS_X + BOSS_WIDTH), 0, BOSS_WIDTH, BOSS_HEIGHT);
+            bossEnemy_front[2] = enemySheet.crop((BOSS_X + BOSS_WIDTH * 2), 0, BOSS_WIDTH, BOSS_HEIGHT);
+
+            bossEnemy_left[0] = enemySheet.crop(BOSS_X, 32, BOSS_WIDTH, BOSS_HEIGHT);
+            bossEnemy_left[1] = enemySheet.crop((BOSS_X + BOSS_WIDTH), 32, BOSS_WIDTH, BOSS_HEIGHT);
+            bossEnemy_left[2] = enemySheet.crop((BOSS_X + BOSS_WIDTH * 2), 32, BOSS_WIDTH, BOSS_HEIGHT);
+
+            bossEnemy_right[0] = enemySheet.crop(BOSS_X, 64, BOSS_WIDTH, BOSS_HEIGHT);
+            bossEnemy_right[1] = enemySheet.crop((BOSS_X + BOSS_WIDTH), 64, BOSS_WIDTH, BOSS_HEIGHT);
+            bossEnemy_right[2] = enemySheet.crop((BOSS_X + BOSS_WIDTH * 2), 64, BOSS_WIDTH, BOSS_HEIGHT);
+
+            bossEnemy_back[0] = enemySheet.crop(BOSS_X, 96, BOSS_WIDTH, BOSS_HEIGHT);
+            bossEnemy_back[1] = enemySheet.crop((BOSS_X + BOSS_WIDTH), 96, BOSS_WIDTH, BOSS_HEIGHT);
+            bossEnemy_back[2] = enemySheet.crop((BOSS_X + BOSS_WIDTH * 2), 96, BOSS_WIDTH, BOSS_HEIGHT);
 
         } catch (IOException e) {
             e.printStackTrace();
