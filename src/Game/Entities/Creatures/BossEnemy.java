@@ -181,8 +181,8 @@ public class BossEnemy extends CreatureBase  {
         } else {
             x = teleportToX;
             y = teleportToY;
-            teleporting = false;
         }
+        teleporting = false;
     }
 
     private void checkIfMove() {
