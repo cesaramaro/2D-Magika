@@ -167,9 +167,6 @@ public class ZombieEnemy extends CreatureBase  {
      * Checks for empty trajectories around the zombie if it's
      * colliding with a solid item
      */
-    // Method to check for empty blocks around the zombie and if it's empty,
-    // check which is closer to the current player coordinates and move there. Keep checking
-    // until there is no solid tile around or until the player is out of reach
     private void checkEmptyTrajectories(int zombieX, int zombieY) {
         // Temporary so it doesn't throw a StackOverflow error
         if (recursiveCount > 1000) {
@@ -249,10 +246,6 @@ public class ZombieEnemy extends CreatureBase  {
         System.out.println("Closest empty tile is " + closestBlock);
         recursiveCount++;
         checkEmptyTrajectories(closestBlock.x, closestBlock.y);
-
-        // TODO Check for the corners to see which is the better option
-        // if they have the same distance
-        // TODO Check for static entities and not just "walls" (rock tiles)
     }
     
     private void checkIfMove() {
@@ -332,38 +325,37 @@ public class ZombieEnemy extends CreatureBase  {
 
 
     /*
-     * Add description
-     * @param
+     * Renders the zombie's graphics
+     * @param Graphics g
      */
     @Override
     public void render(Graphics g) {
+        float xOffSet = handler.getGameCamera().getxOffset();
+        float yOffSet = handler.getGameCamera().getyOffset();
+        
         g.drawImage(
                 getCurrentAnimationFrame(animDown, animUp, animLeft, animRight, 
                         Images.zombieEnemy_front, Images.zombieEnemy_back,  
                         Images.zombieEnemy_left, Images.zombieEnemy_right), 
-                (int) (x - handler.getGameCamera().getxOffset()), 
-                (int) (y - handler.getGameCamera().getyOffset()), 
+                (int) (x - xOffSet), 
+                (int) (y - yOffSet), 
                 width, height, null);
+        
         g.setColor(Color.BLACK);
-        g.drawRect((int)(x-handler.getGameCamera().getxOffset()-1),(int)(y-handler.getGameCamera().getyOffset()-21),76,11);
-        if(this.getHealth()>35){
+        g.drawRect((int) (x - xOffSet -1), (int) (y - yOffSet - 21), 76, 11);
+        
+        if (this.getHealth() > 35) {
             g.setColor(Color.GREEN);
-            g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int)(getHealth()*1.5),10);
-
-        }else if(this.getHealth()>=20 && getHealth()<=35){
+        } else if (this.getHealth() >= 20 && getHealth() <= 35) {
             g.setColor(Color.YELLOW);
-            g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int)(getHealth()*1.5),10);
-
-        }else if(this.getHealth() < 20){
+            this.attack = 4;
+        } else if (this.getHealth() < 20){
             g.setColor(Color.RED);
-            g.fillRect((int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-20),(int) (getHealth()*1.5),10);
-
+            this.attack = 5;
         }
+        g.fillRect((int) (x - xOffSet), (int) (y - yOffSet - 20), (int) (getHealth() * 1.5), 10);
         g.setColor(Color.white);
-        g.drawString("Health: " + getHealth(),(int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()-10));
-    
-        
-        
+        g.drawString("Health: " + getHealth(), (int) (x - xOffSet), (int) (y - yOffSet - 10));
     }
 
     /*
