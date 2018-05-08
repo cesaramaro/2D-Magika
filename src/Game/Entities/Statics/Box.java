@@ -84,7 +84,17 @@ public class Box extends StaticEntity {
         	handler.getWorld().getItemManager().addItem(Item.potionItem.createNew((int)x + bounds.x,(int)y + bounds.y,RNGR));
         	break;
         case(1):
-        	handler.getWorld().getItemManager().addItem(Item.medkitItem.createNew((int)x + bounds.x,(int)y + bounds.y,RNGR));
+        	randint=new Random();
+        	RNGR=randint.nextInt(2) ;
+        	switch(RNGR) {
+        	case(0):
+        		handler.getWorld().getItemManager().addItem(Item.medkitItem.createNew((int)x + bounds.x,(int)y + bounds.y,RNGR));
+        		break;
+        	case(1):
+        		handler.getWorld().getItemManager().addItem(Item.potionItem.createNew((int)x + bounds.x,(int)y + bounds.y,RNGR));
+        		break;
+        	}
+        	
         	break;
         }
     }
