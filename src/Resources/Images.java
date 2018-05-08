@@ -16,8 +16,12 @@ public class Images {
     private static final int Fwidth = 512, Fheight = 197;
     private static final int ZOMBIE_WIDTH = 32, ZOMBIE_HEIGHT = 32;
     private static final int ZOMBIE_X = 96;
-    private static final int BOSS_WIDTH = 32, BOSS_HEIGHT = 32;
-    private static final int BOSS_X = 288;
+    private static final int BOSS_WIDTH = 32, BOSS_HEIGHT = 32, BOSS_X = 288;
+    private static final int PLAYER_WIDTH = 44, PLAYER_HEIGHT = 50, PLAYER_Y = 13;
+    private static final int PLAYER_HEIGHT_FRONT = 55;
+    private static final int PLAYER_HEIGHT_LEFT = 50;
+    private static final int PLAYER_HEIGHT_RIGHT = 53;
+    
 
     public static BufferedImage[] blocks;
     public static BufferedImage[] player_right;
@@ -72,14 +76,15 @@ public class Images {
         SpriteSheet Chestsheet = new SpriteSheet(Images.loadImage("/Sheets/chest2.png"));
         SpriteSheet Questsheet = new SpriteSheet(Images.loadImage("/Sheets/quest.png"));
         SpriteSheet enemySheet = new SpriteSheet(Images.loadImage("/Sheets/enemies.png"));
+        SpriteSheet playerSheet = new SpriteSheet(Images.loadImage("/Sheets/playerSprite.png"));
 
 
         blocks = new BufferedImage[17];
 
-        player_left = new BufferedImage[4];
-        player_right = new BufferedImage[4];
-        player_front = new BufferedImage[4];
-        player_back = new BufferedImage[4];
+        player_left = new BufferedImage[3];
+        player_right = new BufferedImage[3];
+        player_front = new BufferedImage[3];
+        player_back = new BufferedImage[3];
 
         SkelyEnemy_left = new BufferedImage[4];
         SkelyEnemy_right = new BufferedImage[4];
@@ -238,32 +243,27 @@ public class Images {
             chest[0] = Chestsheet.crop(1, 0, 30, 32);//closed
             chest[1] = Chestsheet.crop(33, 0, 30, 32);//opened
             
-          //Quest
+            //Quest
             quest[0] = Questsheet.crop(63, 54, 293, 166);//chest
             quest[1] = Questsheet.crop(390, 54, 298, 473);//quest info
             quest[2] = Questsheet.crop(724, 54, 298, 473);//quest2 info 
 
+            // Player anim
+            player_front[0] = playerSheet.crop(50, 137, PLAYER_WIDTH, PLAYER_HEIGHT_FRONT);
+            player_front[1] = playerSheet.crop(2, 137, PLAYER_WIDTH, PLAYER_HEIGHT_FRONT);
+            player_front[2] = playerSheet.crop(97, 137, PLAYER_WIDTH, PLAYER_HEIGHT_FRONT);
 
-            //player anim
-            player_front[0]=newsheet.crop(132,131,width,height);
-            player_front[1]=newsheet.crop(164,131,width,height);
-            player_front[2]=newsheet.crop(196,131,width,height);
-            player_front[3]=newsheet.crop(228,131,28,height);
+            player_left[0] = playerSheet.crop(50, 206, PLAYER_WIDTH, PLAYER_HEIGHT_LEFT);
+            player_left[1] = playerSheet.crop(2, 206, PLAYER_WIDTH, PLAYER_HEIGHT_LEFT);
+            player_left[2] = playerSheet.crop(97, 206, PLAYER_WIDTH, PLAYER_HEIGHT_LEFT);
 
-            player_left[0]=newsheet.crop(132,163,width,height);
-            player_left[1]=newsheet.crop(164,163,width,height);
-            player_left[2]=newsheet.crop(196,163,width,height);
-            player_left[3]=newsheet.crop(228,163,28,height);
+            player_right[0] = playerSheet.crop(50, 76, PLAYER_WIDTH, PLAYER_HEIGHT_RIGHT);
+            player_right[1] = playerSheet.crop(2, 76, PLAYER_WIDTH, PLAYER_HEIGHT_RIGHT);
+            player_right[2] = playerSheet.crop(97, 76, PLAYER_WIDTH, PLAYER_HEIGHT_RIGHT);
 
-            player_right[0]=newsheet.crop(132,195,width,height);
-            player_right[1]=newsheet.crop(164,195,width,height);
-            player_right[2]=newsheet.crop(196,195,width,height);
-            player_right[3]=newsheet.crop(228,195,28,height);
-
-            player_back[0]=newsheet.crop(132,227,width,height);
-            player_back[1]=newsheet.crop(164,227,width,height);
-            player_back[2]=newsheet.crop(196,227,width,height);
-            player_back[3]=newsheet.crop(228,227,28,height);
+            player_back[0] = playerSheet.crop(50, PLAYER_Y, PLAYER_WIDTH, PLAYER_HEIGHT);
+            player_back[1] = playerSheet.crop(2, PLAYER_Y, PLAYER_WIDTH, PLAYER_HEIGHT);
+            player_back[2] = playerSheet.crop(97, PLAYER_Y, PLAYER_WIDTH, PLAYER_HEIGHT);
 
             //Skely enemy anim
             SkelyEnemy_front[0]=newsheet.crop(132,131+130,width,height);
