@@ -66,8 +66,10 @@ public class BaseWorld {
                 handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(true);
             } else if (currentWorld == 2) {
                 handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(false);
+                handler.getWorld().getEntityManager().getPlayer().getQuest3().setActive(true);
+            } else if (currentWorld ==3) {
+            	handler.getWorld().getEntityManager().getPlayer().getQuest3().setActive(false);
             }
-            //handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(true);
             handler.getWorld().getEntityManager().getPlayer().getQuestItems().getQuestItems().clear();
             entityManager.getPlayer().setX(spawnX);
             entityManager.getPlayer().setY(spawnY);
@@ -107,6 +109,7 @@ public class BaseWorld {
         entityManager.getPlayer().getSpellGUI().render(g);
         entityManager.getPlayer().getQuest1().render(g);
         entityManager.getPlayer().getQuest2().render(g);
+        entityManager.getPlayer().getQuest3().render(g);
         entityManager.getPlayer().getQuestItems().render(g);
 
     }

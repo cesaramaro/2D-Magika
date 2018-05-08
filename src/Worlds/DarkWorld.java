@@ -2,6 +2,8 @@ package Worlds;
 
 import Game.Entities.Creatures.BossEnemy;
 import Game.Entities.Creatures.Player;
+import Game.Inventories.QuestItems;
+import Game.Items.Item;
 import Main.Handler;
 
 public class DarkWorld extends BaseWorld {
@@ -24,12 +26,12 @@ public class DarkWorld extends BaseWorld {
         entityManager.getPlayer().setY(spawnY);
     }
     
-//    @Override
-//    public void addQuestItems() {
-//    	for (Item item : handler.getWorld().getEntityManager().getPlayer().getQuest3().getQuest3Items()) {
-//			QuestItems.addItem(item);
-//		}
-//    }
+    @Override
+    public void addQuestItems() {
+    	for (Item item : handler.getWorld().getEntityManager().getPlayer().getQuest3().getQuest3Items()) {
+			QuestItems.addItem(item);
+		}
+    }
     
     @Override 
     public void setNextWorld() { // Sets next world (makes skip possible)

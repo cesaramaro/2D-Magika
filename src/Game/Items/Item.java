@@ -34,6 +34,7 @@ public class Item {
     public static Item potionItem = new Item(Images.items[3],"Potion",5);
     public static Item brainItem = new Item(Images.items[4],"Brain",6);
     public static Item medkitItem = new Item(Images.items[5],"Medkit",7);
+    public static Item boss = new Item(Images.bossEnemy_front[0],"Boss",8);
     
     //class
 
