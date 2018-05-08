@@ -12,6 +12,7 @@ import Resources.Images;
 import Main.Handler;
 import Quests.Quest1;
 import Quests.Quest2;
+import Quests.Quest3;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -35,6 +36,7 @@ public class Player extends CreatureBase {
     private Inventory inventory;
     private Quest1 quest1;
     private Quest2 quest2;
+    private Quest3 quest3;
     private QuestItems questItems;
     private SpellCastUI spellGUI;
 
@@ -87,6 +89,7 @@ public class Player extends CreatureBase {
         spellGUI= new SpellCastUI(handler);
         quest1 = new Quest1(handler);
         quest2 = new Quest2(handler);
+        quest3 = new Quest3(handler);
         questItems = new QuestItems(handler);
     }
 
@@ -153,9 +156,15 @@ public class Player extends CreatureBase {
 
         //Inventory
         inventory.tick();
+        
+        //Quest Inventory
+        questItems.tick();
+        
+        //Quests
         quest1.tick();
         quest2.tick();
-        questItems.tick();
+        quest3.tick();
+        
         //spellgui
         spellGUI.tick();
         
@@ -395,6 +404,9 @@ public class Player extends CreatureBase {
     }
     public Quest2 getQuest2() {
         return quest2;
+    }
+    public Quest3 getQuest3() {
+        return quest3;
     }
     public QuestItems getQuestItems() {
         return questItems;

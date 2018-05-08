@@ -78,6 +78,9 @@ public class Door extends StaticEntity {
                 handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(true);
             } else if (handler.getWorld().currentWorld == 2) {
                 handler.getWorld().getEntityManager().getPlayer().getQuest2().setActive(false);
+                handler.getWorld().getEntityManager().getPlayer().getQuest3().setActive(true);
+            } else if(handler.getWorld().currentWorld == 3) {
+            	handler.getWorld().getEntityManager().getPlayer().getQuest3().setActive(false);
             }
             handler.setWorld(world);
             handler.getWorld().setWorldStart(true);

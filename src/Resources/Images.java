@@ -116,7 +116,7 @@ public class Images {
         FireBallDown = new BufferedImage[6];
 
         chest = new BufferedImage[2];
-        quest = new BufferedImage[3];
+        quest = new BufferedImage[4];
 
 
         try {
@@ -244,9 +244,10 @@ public class Images {
             chest[1] = Chestsheet.crop(33, 0, 30, 32);//opened
             
             //Quest
-            quest[0] = Questsheet.crop(63, 54, 293, 166);//chest
+            quest[0] = Questsheet.crop(63, 54, 293, 166);//quest items ui
             quest[1] = Questsheet.crop(390, 54, 298, 473);//quest info
             quest[2] = Questsheet.crop(724, 54, 298, 473);//quest2 info 
+            quest[3] = Questsheet.crop(1059, 54, 298, 473);//quest3 info
 
             // Player anim
             player_front[0] = playerSheet.crop(50, 137, PLAYER_WIDTH, PLAYER_HEIGHT_FRONT);
