@@ -40,7 +40,6 @@ public class World1 extends BaseWorld{
         entityManager.addEntity(new SkelyEnemy(handler, 1250, 500));
         entityManager.addEntity(new SkelyEnemy(handler, 500, 700));
         entityManager.addEntity(new SkelyEnemy(handler, 600, 1250));
-        entityManager.addEntity(new Box(handler,577,575,"Box"));
         
         //Player Spawn Point
         entityManager.getPlayer().setX(spawnX);
