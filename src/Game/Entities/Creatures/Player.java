@@ -55,6 +55,9 @@ public class Player extends CreatureBase {
     protected int potionTime = 1200;
     protected int timePassed = -1;
     
+    // Clock power up - Freezes boss for 10 seconds
+    protected boolean clockPowerUpActive = false;
+    
     private int animWalkingSpeed = 150;
     private int animFireSpeed = 250;
     private int FireSpeed = 2;
@@ -418,7 +421,16 @@ public class Player extends CreatureBase {
     public SpellCastUI getSpellGUI() {
         return spellGUI;
     }
+    
     public void setPotionActive(boolean status) {
     	this.potionActive = status;
+    }
+    
+    public void setClockPowerUpActive(boolean status) {
+        this.clockPowerUpActive = status;
+    }
+    
+    public boolean isClockPowerUpActive() {
+        return clockPowerUpActive;
     }
 }

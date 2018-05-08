@@ -2,6 +2,7 @@ package Worlds;
 
 import Game.Entities.Creatures.BossEnemy;
 import Game.Entities.Creatures.Player;
+import Game.Entities.Statics.Box;
 import Game.Inventories.QuestItems;
 import Game.Items.Item;
 import Main.Handler;
@@ -21,6 +22,7 @@ public class DarkWorld extends BaseWorld {
         
         currentWorld = 3;
         entityManager.addEntity(new BossEnemy(handler, bossSpawnX, bossSpawnY));
+        entityManager.addEntity(new Box(handler,577,575,"Box"));
         
         entityManager.getPlayer().setX(spawnX);
         entityManager.getPlayer().setY(spawnY);

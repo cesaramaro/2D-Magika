@@ -34,7 +34,7 @@ public class Item {
     public static Item potionItem = new Item(Images.items[3],"Potion",5);
     public static Item brainItem = new Item(Images.items[4],"Brain",6);
     public static Item medkitItem = new Item(Images.items[5],"Medkit",7);
-    public static Item boss = new Item(Images.bossEnemy_front[0],"Boss",8);
+    public static Item clockItem = new Item(Images.items[6], "Clock", 8);
     
     //class
 
@@ -62,22 +62,25 @@ public class Item {
     }
 
 
-    public void tick(){
-        if(handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0f,0f).intersects(bounds)){
-            pickedUp=true;
+    public void tick() {
+        if (handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0f, 0f).intersects(bounds)) {
+            pickedUp = true;
             goodieDetect();
         }
     }
     public void goodieDetect() {
-    	if(this.name.equals("Medkit")) {
+    	if (this.name.equals("Medkit")) {
     		handler.getWorld().getEntityManager().getPlayer().setHealth(handler.getWorld().getEntityManager().getPlayer().getMaxHealth());
-    	}else if(this.name.equals("Potion")) {
+    	} else if (this.name.equals("Potion")) {
     		System.out.println("Potion");
     		handler.getWorld().getEntityManager().getPlayer().setPotionActive(true);
-    	}else {
+    	} else if (this.name.equals("Clock")) {
+    	    handler.getWorld().getEntityManager().getPlayer().setClockPowerUpActive(true);
+    	} else {
     		handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(this);
     	}
     }
+    
     public void render(Graphics g){
         if(handler == null){
             return;

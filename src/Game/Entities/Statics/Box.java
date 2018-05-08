@@ -77,28 +77,22 @@ public class Box extends StaticEntity {
 
     @Override
     public void die() {
-    	randint=new Random();
-        RNGR=randint.nextInt(2) ;
-        switch(RNGR) {
-        case(0):
-        	handler.getWorld().getItemManager().addItem(Item.potionItem.createNew((int)x + bounds.x,(int)y + bounds.y,RNGR));
-        	break;
-        case(1):
-        	randint=new Random();
-        	RNGR=randint.nextInt(2) ;
-        	switch(RNGR) {
-        	case(0):
-        		handler.getWorld().getItemManager().addItem(Item.medkitItem.createNew((int)x + bounds.x,(int)y + bounds.y,RNGR));
-        		break;
-        	case(1):
-        		handler.getWorld().getItemManager().addItem(Item.potionItem.createNew((int)x + bounds.x,(int)y + bounds.y,RNGR));
-        		break;
-        	}
-        	
-        	break;
+        int currentWorld = handler.getWorld().getCurrentWorld();
+    	randint = new Random();
+    	RNGR = (currentWorld == 3 ? 2 : randint.nextInt(1));
+    	
+    	switch (RNGR) {
+    	case 0:
+    	    handler.getWorld().getItemManager().addItem(Item.potionItem.createNew((int) x + bounds.x, (int) y + bounds.y, RNGR));
+    	    break;
+    	case 1:
+    	    handler.getWorld().getItemManager().addItem(Item.medkitItem.createNew((int) x + bounds.x, (int) y + bounds.y, RNGR));
+    	    break;
+    	case 2:
+    	    handler.getWorld().getItemManager().addItem(Item.clockItem.createNew((int) x + bounds.x, (int) y + bounds.y, RNGR));
+    	    break;
         }
     }
-
 
     public int getHealth() {
         return health;

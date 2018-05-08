@@ -180,5 +180,9 @@ public class BaseWorld {
     public boolean getWorldStart() {
     	return this.worldStart;
     }
+    
+    public int getCurrentWorld() {
+        return currentWorld;
+    }
 
 }

@@ -22,6 +22,7 @@ public class BossEnemy extends CreatureBase  {
     private int animWalkingSpeed = 150;
 
     private int healthcounter = 0;
+    private int clockTime = 0;
 
     private Random randint;
     private int moveCount = 0;
@@ -52,13 +53,20 @@ public class BossEnemy extends CreatureBase  {
 
     @Override
     public void tick() {
-        if (!teleporting) {
+        if (!teleporting && !handler.getWorld().getEntityManager().getPlayer().isClockPowerUpActive()) {
             animDown.tick();
             animUp.tick();
             animRight.tick();
             animLeft.tick();
             move();
             checkIfMove();
+        }
+        
+        if (handler.getWorld().getEntityManager().getPlayer().isClockPowerUpActive()) {
+            if (clockTime > 600) {
+                handler.getWorld().getEntityManager().getPlayer().setClockPowerUpActive(false);
+            }
+            clockTime++;
         }
 
         moveCount++;
