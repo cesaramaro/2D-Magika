@@ -42,6 +42,8 @@ public class CaveWorld extends BaseWorld {
         entityManager.addEntity(new Chest(handler, 250, 0, "Chest"));
         entityManager.addEntity(new Door(handler, 100, 0, darkWorld, "Door"));
         entityManager.addEntity(new Box(handler, 700, 575, "Box"));
+        entityManager.addEntity(new Box(handler, 130, 775, "Box"));
+        entityManager.addEntity(new Box(handler, 960, 315, "Box"));
         entityManager.addEntity(new ZombieEnemy(handler, ZombieEnemy.zombieSpawnX, ZombieEnemy.zombieSpawnY));
         entityManager.addEntity(new SkelyEnemy(handler, spawnX + 350, spawnY + 550));
         
