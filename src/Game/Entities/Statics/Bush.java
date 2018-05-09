@@ -11,9 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-/**
- * Created by Elemental on 1/1/2017.
- */
 public class Bush extends StaticEntity {
     private File audioFile;
     private AudioInputStream audioStream;
@@ -61,9 +58,7 @@ public class Bush extends StaticEntity {
         }
         if(!isActive()){
             audioClip.stop();
-
         }
-
     }
 
     @Override
@@ -73,20 +68,28 @@ public class Bush extends StaticEntity {
 
     }
 
-
-
+    /*
+     * Drops an item when the bush is destroyed
+     */
     @Override
     public void die() {
-    	randint=new Random();
-        RNGR=randint.nextInt(2) + 1;
-        handler.getWorld().getItemManager().addItem(Item.stickItem.createNew((int)x + bounds.x,(int)y + bounds.y,RNGR));
+    	randint = new Random();
+        RNGR = randint.nextInt(2) + 1;
+        handler.getWorld().getItemManager().addItem(Item.stickItem.createNew((int) x + bounds.x, (int) y + bounds.y, RNGR));
     }
 
-
+    /*
+     * Gets the bush's health
+     * @return int - health
+     */
     public int getHealth() {
         return health;
     }
 
+    /*
+     * Sets the bush's health
+     * @param int - health
+     */
     public void setHealth(int health) {
         this.health = health;
     }

@@ -1,31 +1,17 @@
 package Game.Entities.Statics;
 
 import Game.Entities.Creatures.Player;
-import Game.Items.Item;
 import Game.Tiles.Tile;
 import Resources.Images;
 import Main.Handler;
 
-import javax.sound.sampled.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by Elemental on 1/2/2017.
  */
 public class Chest extends StaticEntity {
 
-    private File audioFile;
-    private AudioInputStream audioStream;
-    private AudioFormat format;
-    private DataLine.Info info;
-    private Clip audioClip;
-    private Random randint;
-    private int RNGR;
     private boolean opened = false;
     private Rectangle ir = new Rectangle();
     private int timeOpen;
@@ -58,20 +44,20 @@ public class Chest extends StaticEntity {
     		opened = false;
     		timeOpen = 0;
     	}
-        if(isBeinghurt()) { 
-        	deliverItems();
-        	if(opened) {
-        		
-        		try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-        		
-        		opened =!opened;
-        	}else if (!opened) {
-        		opened =!opened;
+    	if(isBeinghurt()) { 
+    	    deliverItems();
+    	    if(opened) {
+
+    	        try {
+    	            Thread.sleep(500);
+    	        } catch (InterruptedException e) {
+    	            // TODO Auto-generated catch block
+    	            e.printStackTrace();
+    	        }
+
+    	        opened =!opened;
+    	    }else if (!opened) {
+    	        opened =!opened;
         		try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
@@ -95,6 +81,9 @@ public class Chest extends StaticEntity {
         }
     }
     
+    /*
+     * Delivers the quest items to the chest
+     */
     public void deliverItems() {
     	for(int i = 0 ; i< handler.getWorld().getEntityManager().getPlayer().getQuestItems().getQuestItems().size();i++) {
     		for(int j = 0 ; j<handler.getWorld().getEntityManager().getPlayer().getInventory().getInventoryItems().size();j++) {
@@ -110,17 +99,26 @@ public class Chest extends StaticEntity {
     	
     }
     
-
+    
+    /*
+     * Renders the chest's graphics
+     */
     @Override
     public void render(Graphics g) {
+        float xOffSet = handler.getGameCamera().getxOffset();
+        float yOffSet = handler.getGameCamera().getyOffset();
+        
         if(!opened) {
-        g.drawImage(Images.chest[0],(int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()),width,height,null);
-        }
-        else {
-        	g.drawImage(Images.chest[1],(int)(x-handler.getGameCamera().getxOffset()),(int)(y-handler.getGameCamera().getyOffset()),width,height,null);
+            g.drawImage(Images.chest[0], (int) (x - xOffSet), (int) (y - yOffSet), width, height, null);
+        } else {
+            g.drawImage(Images.chest[1],(int)(x - xOffSet), (int) (y - yOffSet), width, height, null);
         }
         checkForPlayer(g, handler.getWorld().getEntityManager().getPlayer());
     }
+    
+    /*
+     * Checks if the player is near the chest
+     */
     private void checkForPlayer(Graphics g, Player p) {
         Rectangle pr = p.getCollisionBounds(0,0);
 
@@ -128,6 +126,10 @@ public class Chest extends StaticEntity {
             g.drawImage(Images.E,(int) x+width,(int) y+10+10,32,32,null);
         }
     }
+    
+    /*
+     * Makes the door visible once the quest is completed
+     */
     @Override
     public void die() {
     	for(int i = 0; i < handler.getWorld().getEntityManager().getEntities().size();i++) {

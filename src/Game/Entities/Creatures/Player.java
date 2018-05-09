@@ -1,7 +1,6 @@
 package Game.Entities.Creatures;
 
 import Game.Entities.EntityBase;
-import Game.GameStates.MenuState;
 import Game.GameStates.State;
 import Game.Inventories.Inventory;
 import Game.Inventories.QuestItems;

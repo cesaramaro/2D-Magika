@@ -193,6 +193,10 @@ public class BossEnemy extends CreatureBase  {
         teleporting = false;
     }
 
+    /*
+     * Checks if the boss should move depending
+     * on how close it is to the player
+     */
     private void checkIfMove() {
         xMove = 0;
         yMove = 0;
