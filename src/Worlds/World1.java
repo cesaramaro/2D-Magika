@@ -2,7 +2,6 @@ package Worlds;
 
 import Game.Entities.Creatures.Player;
 import Game.Entities.Creatures.SkelyEnemy;
-import Game.Entities.Creatures.ZombieEnemy;
 import Game.Entities.Statics.*;
 import Game.Inventories.QuestItems;
 import Game.Items.Item;

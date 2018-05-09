@@ -29,7 +29,7 @@ public abstract class EntityBase {
     protected String type = "";
 
 
-    public EntityBase(Handler handler, float x, float y, int height, int width){
+    public EntityBase(Handler handler, float x, float y, int height, int width) {
         this.handler = handler;
         this.x = x;
         this.y = y;
@@ -46,14 +46,15 @@ public abstract class EntityBase {
 
     public abstract void die();
 
-    public void hurt(int amt){
+    public void hurt(int amt) {
         health -= amt;
         beinghurt=true;
-        if(health <= 0){
+        if (health <= 0) {
             active = false;
             die();
         }
     }
+    
     public void renderLife(Graphics g) {
         if (beinghurt && count <=8){
             if(count == 8){
@@ -98,73 +99,146 @@ public abstract class EntityBase {
         return null;
     }
     
+    /*
+     * Checks if the entity is being hurt
+     * @return boolean - whether it's being hurt or not
+     */
     public boolean isBeinghurt() {
         return beinghurt;
     }
 
+    /*
+     * Sets if the entity is being hurt
+     * @param boolean - whether it should be set to being hurt or not
+     */
     public void setBeinghurt(boolean beinghurt) {
         this.beinghurt = beinghurt;
     }
 
+    /*
+     * Gets the entity's x coordinate
+     * @return float
+     */
     public float getX() {
         return x;
     }
 
+    /*
+     * Sets the entity's x coordinate
+     * @param float - x coordinate
+     */
     public void setX(float x) {
         this.x = x;
     }
 
+    /*
+     * Gets the entity's y coordinate
+     * @return float
+     */
     public float getY() {
         return y;
     }
 
+    /*
+     * Sets the entity's y coordinate
+     * @param float - y coordinate
+     */
     public void setY(float y) {
         this.y = y;
     }
 
+    /*
+     * Gets the entity's width
+     * @return int - width
+     */
     public int getWidth() {
         return width;
     }
 
+    /*
+     * Sets the entity's width
+     * @param int - width
+     */
     public void setWidth(int width) {
         this.width = width;
     }
 
+    /*
+     * Gets the entity's height
+     * @return int - height
+     */
     public int getHeight() {
         return height;
     }
 
+    /*
+     * Sets the entity's height
+     * @param int - height
+     */
     public void setHeight(int height) {
         this.height = height;
     }
 
+    /*
+     * Gets the entity's health
+     * @return int - health
+     */
     public int getHealth() {
         return health;
     }
 
+    /*
+     * Sets the entity's health
+     * @param int - health
+     */
     public void setHealth(int health) {
         this.health = health;
     }
 
+    /*
+     * Checks if the entity is active
+     * @return boolean
+     */
     public boolean isActive() {
         return active;
     }
 
+    /*
+     * Sets if the entity is active
+     * @param boolean
+     */
     public void setActive(boolean active) {
         this.active = active;
     }
+    
+    /*
+     * Checks if the entity is visible
+     * @return boolean
+     */
     public boolean isVisible() {
         return visible;
     }
 
+    /*
+     * Sets if the entity is visible
+     * @param boolean
+     */
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
 
+    /*
+     * Gets the entity's type
+     * @return String
+     */
     public String getType() {
         return type;
     }
 
+    /*
+     * Sets the entity's type
+     * @param String
+     */
     public void setType(String type) {
         this.type = type;
     }

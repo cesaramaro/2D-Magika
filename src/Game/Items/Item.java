@@ -68,6 +68,11 @@ public class Item {
             goodieDetect();
         }
     }
+    
+    /*
+     * Detects the goodie (potion, medkit, clock power up) on the map
+     * and activates its respective events
+     */
     public void goodieDetect() {
     	if (this.name.equals("Medkit")) {
     		handler.getWorld().getEntityManager().getPlayer().setHealth(handler.getWorld().getEntityManager().getPlayer().getMaxHealth());

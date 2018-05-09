@@ -10,6 +10,7 @@ import Main.Handler;
 public class DarkWorld extends BaseWorld {
     
     private Handler handler;
+    @SuppressWarnings("unused")
     private Player player;
     
     private int bossSpawnX = 600;
@@ -22,12 +23,16 @@ public class DarkWorld extends BaseWorld {
         
         currentWorld = 3;
         entityManager.addEntity(new BossEnemy(handler, bossSpawnX, bossSpawnY));
-        entityManager.addEntity(new Box(handler,577,575,"Box"));
+        entityManager.addEntity(new Box(handler, 577, 575, "Box"));
+        entityManager.addEntity(new Box(handler, 900, 500, "Box"));
         
         entityManager.getPlayer().setX(spawnX);
         entityManager.getPlayer().setY(spawnY);
     }
     
+    /*
+     * Adds the quest items to the world
+     */
     @Override
     public void addQuestItems() {
     	for (Item item : handler.getWorld().getEntityManager().getPlayer().getQuest3().getQuest3Items()) {
