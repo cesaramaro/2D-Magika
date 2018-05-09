@@ -23,8 +23,11 @@ public class DarkWorld extends BaseWorld {
         
         currentWorld = 3;
         entityManager.addEntity(new BossEnemy(handler, bossSpawnX, bossSpawnY));
-        entityManager.addEntity(new Box(handler, 577, 575, "Box"));
         entityManager.addEntity(new Box(handler, 900, 500, "Box"));
+        entityManager.addEntity(new Box(handler,577,575,"Box"));
+        entityManager.addEntity(new Box(handler,702,388,"Box"));
+        entityManager.addEntity(new Box(handler,100,700,"Box"));
+        entityManager.addEntity(new Box(handler,573,190,"Box"));
         
         entityManager.getPlayer().setX(spawnX);
         entityManager.getPlayer().setY(spawnY);
